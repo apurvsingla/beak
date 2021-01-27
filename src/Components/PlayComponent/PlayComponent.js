@@ -1,20 +1,25 @@
+/* eslint-disable no-unused-vars */
 import React,{useState} from 'react';
 import {Graph, 
 LevelIcon, BackIcon, RetryIcon,
 } from './Styles/PlayComponent.styles';
 import ScrollLock  from 'react-scrolllock';
 import {
-tactSource,
-conditionSource,
-soundSource,
-beeperSource,
+// piaono,
+// conditionSource,
+// resistorSource,
+// tactSource,
+// beeperSource,
+// ledSource,
 powerSource,
-distanceSource,
-graphSource,
-lightSource,
-magSource,
-motorSource,
-ledSource,
+// timerSource,
+// dualSwitch,
+// ldrSource,
+// diodeSource,
+// capacitorSource,
+// potSource,
+// usbSource,
+// transistorSource,
 leftImageSource
 } from '../Source/Source';
 import './Styles/play.styles.scss';
@@ -29,6 +34,7 @@ import {useHistory} from 'react-router-dom';
 import BottomComponent from './BottomComponent/BottomComponent';
 import MiddleComponent from './MiddleComponent/MiddleComponent';
 import axios from "axios";
+import DnDFlow from './DndFlow/DndFlow';
 
 const PlayComponent = () => {
     const history = useHistory();
@@ -70,7 +76,7 @@ const PlayComponent = () => {
         normalImg: [...normalImg, value],
     }
 
-    const save = () => axios.post('http://localhost:8000/fan', data).then((res) => {
+    const save = () => axios.post('https://beak-server.herokuapp.com/fan', data).then((res) => {
         console.log(res.data)
     }).catch((error) => {
         console.log(error)
@@ -98,74 +104,13 @@ const PlayComponent = () => {
         save();
     }
 
-    const onImage1Concat = (src,alt) => {
-        if(activeTopBoolean){
-            setNormalImg(i => i.concat({id: idTop, src: src,
-                pos:'top-right',alt:alt, glowID: num, right: currentActiveTop}));
-            setIdTop(idTop+1);
-            setNum(num+1);
-            return;
-        }
-        if(activeBottomBoolean){
-            setNormalImg(i => i.concat({id: idBottom, src: src,
-            pos: 'bottom-right', alt: alt, glowID: num,right:currentActiveBottom}));
-            setIdBottom(idBottom+1);
-            setNum(num+1);
-            return;
-        }
-        if(booleanTwTop){
-            setNormalImg(i => i.concat({id: idTwoWayTopRight,src: src,
-                pos: 'two-way-top-right', alt: alt, glowID: num}))
-                setIdTwoWayTopRight(idTwoWayTopRight+1);
-                setNum(num+1);
-                return;
-        }
-        if(booleanTwBottom){
-            setNormalImg(i => i.concat({id: idTwoWayBottomRight,src: src,
-                pos: 'two-way-bottom-right', alt: alt, glowID: num}))
-                setIdTwoWayBottomRight(idTwoWayBottomRight+1);
-                setNum(num+1);
-                return;
-        }
-         if(src!==powerSource){
-                if(id > 0){
-                    if(src === tactSource || src === lightSource || src === magSource || src === distanceSource){
-                        setNormalImg(i => i.concat({id: id, 
-                            src: src, pos: 'normal',
-                            clicked: false, alt: alt, 
-                            glowId: num}));
-                        setId(id+1);
-                        setNum(num+1);
-                    }else if(src === ledSource || src === graphSource || src === beeperSource || 
-                        src === soundSource || src === motorSource){
-                        setNormalImg(i => i.concat({id: id, src: src, 
-                            bool: false, bools: 0, pos: 'normal', 
-                            alt: alt, clicked: false, glowId: num}));
-                        setId(id+1);
-                        setNum(num+1);
-                    }else if(src === conditionSource){
-                        setNormalImg(i => i.concat({id: id, 
-                            src: src, pos: 'normal', 
-                        alt: alt, clicked: false, even: even}));
-                        setId(id + 1);
-                        setEven(even+1);
-                    }else{
-                        setNormalImg(i => i.concat({id: id, 
-                            src: src, pos: 'normal', alt: alt, 
-                            clicked: false}));
-                        setId(id + 1); 
-                    }
-                }
-            }else if(src === powerSource){
-                // if(id === 1){
-                //     return;
-                // }
-                setId(id+1);
-                setNormalImg(normalImg => normalImg.concat({id: id, 
-                    src: src, pos: 'normal', 
-                    alt: alt, clicked: false}));
-                return;
-            }
+    const onImage1Concat = (src,alt) => {      
+        setNormalImg(i => i.concat({id: id, 
+            src: src, pos: 'normal',
+            clicked: false, alt: alt, 
+            glowId: num}));
+        setId(id+1);
+        setNum(num+1);             
     }
 
 
@@ -262,12 +207,17 @@ const PlayComponent = () => {
 
             {/* Graph */}
             <Scrollbars style={{ width: '78vw', height: '80vh', left: '22vw', position: 'absolute', top: '0',}}>
-                <Graph normalImg={normalImg.length} />
+                <Graph normalImg={normalImg.length} style={{zIndex: '-1'}}/>
                 <RetryIcon
                     onClick={() => reset()}
                 />
                 <LevelIcon />
-                <MiddleComponent 
+                <DnDFlow 
+                image={normalImg} ids={id}
+                setId={setId}
+                setImage={setNormalImg}
+                />
+                {/* <MiddleComponent 
                 image={normalImg} id={id}
                 setId={setId}
                 setImage={setNormalImg}
@@ -291,7 +241,7 @@ const PlayComponent = () => {
                 setActiveTWBottom={setActiveTWBottom} booleanTwTop={booleanTwTop}
                 setBooleanTwTop={setBooleanTwTop} setBooleanTwBottom={setBooleanTwBottom}
                 booleanTwBottom={booleanTwBottom}
-                />
+                /> */}
             </Scrollbars>
             {/* swipeable */}
             <BottomComponent 

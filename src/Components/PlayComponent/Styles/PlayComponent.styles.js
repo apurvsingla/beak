@@ -68,6 +68,18 @@ export const Img = styled.img`
     }  
 `;
 
+export const DivImg = styled.div`
+    background-image: url(${props => props.Image});
+    height: 90px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    `;
+
+export const BottomComponents = styled.div`
+    display: inline-block;
+`;
+
 export const MiddleIconDesk = styled(AddCircleIcon)`
     position: relative;
     bottom: 78px;

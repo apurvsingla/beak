@@ -1,28 +1,34 @@
 import React from 'react';
-import {BottomDesk, Icon, Img, MiddleIconDesk} from '../Styles/PlayComponent.styles';
+import {BottomDesk,DivImg,BottomComponents} from '../Styles/PlayComponent.styles';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ReactSwipe from 'react-swipe';
 import {
-graphSource,
+piaono,
 conditionSource,
-splitterSource,
+resistorSource,
 tactSource,
 beeperSource,
 ledSource,
-lightSource,
 powerSource,
-sequenceSource,
-distanceSource,
-magSource,
-tempSource,
-soundSource,
-motorSource
+timerSource,
+dualSwitch,
+ldrSource,
+diodeSource,
+capacitorSource,
+potSource,
+usbSource,
+transistorSource,
+ledGlowSource
 } from '../../Source/Source';
 const BottomComponent = ({
     onImage1Concat
 }) => {
     let reactSwipeEl;
+    const onDragStart = (event, nodeType) => {
+        event.dataTransfer.setData('application/reactflow', nodeType);
+        event.dataTransfer.effectAllowed = 'move';
+      };
     return (
         <BottomDesk>
                <>
@@ -44,86 +50,168 @@ const BottomComponent = ({
                 swipeOptions={{ continuous: true }}
                 ref={el => (reactSwipeEl = el)}
                 >
-                    <div className="bottom-component" onTouchEnd={() => {
+                    <BottomComponents className="bottom-component" onTouchEnd={() => {
                         }}>
-                        <Icon onClick={() =>  onImage1Concat(powerSource, "Power")} className='icons'/>
-                        <Img src={powerSource} 
-                        alt="power" style={{marginRight: '20px'}}/>
-    
-                        <Icon onClick={() => onImage1Concat(sequenceSource, 'Counter')} className='icons'/>
-                        <Img src={sequenceSource} 
-                        alt="beeper" style={{marginRight: '20px'}}/>
-    
-                        <Icon onClick={(e) =>  onImage1Concat(beeperSource, 'Beeper')} className='icons'/>
-                        <Img src={beeperSource} 
-                        alt="beeper" />
-    
-                        <MiddleIconDesk onClick={() => onImage1Concat(conditionSource, 'Splitter')} className='icons'/>
-                        <Img src={conditionSource} 
-                        alt="beeper" 
-                        style={{
-                        marginLeft: '20px',
-                        marginRight: '20px'
-                        }}/>
-    
-                        <Icon onClick={() => onImage1Concat(distanceSource, 'Proximity')} className='icons'/>
-                        <Img src={distanceSource} 
-                        alt="beeper" />
-                    </div>
-    
-                    <div className="second-slide" onTouchEnd={() => {
-                    }}>
-    
-                        <Icon onClick={() => onImage1Concat(graphSource, "Graph")} className='icons'/>
-                        <Img src={graphSource} 
-                        alt="beeper" style={{marginRight: '20px'}}/>
-    
-                        <Icon onClick={() => onImage1Concat(distanceSource, "Proximity")} className='icons' />
-                        <Img src={distanceSource} 
-                        alt="beeper" style={{marginRight: "20px"}}/>
-    
-                        <Icon onClick={() => onImage1Concat(tactSource, "Tact")} className='icons' />
-                        <Img src={tactSource} 
-                        alt="magnetic" />
-    
-                        <MiddleIconDesk onClick={() => onImage1Concat(ledSource, "LED")} className='icons'/>
-                        <Img src={ledSource} 
-                        alt="beeper" 
-                        style={{
-                        marginLeft: '20px',
-                        marginRight: '20px'
-                        }}/>
+                        <DivImg className="dndnode input" 
+                        style={{width: '72px', display: 'inline-block', height: '90px', marginRight: '50px'}}
+                        onDragStart={(event) => {
+                            onDragStart(event, 'input');
+                            onImage1Concat(powerSource, 'Power')
+                        }} 
+                        Image={powerSource}
+                        draggable>
+                        </DivImg>
+                        <DivImg className="dndnode input" 
+                        style={{width: '130px', display: 'inline-block',marginRight: '50px'}}
+                        onDragStart={(event) => {
+                            onDragStart(event,'input');
+                            onImage1Concat(timerSource, 'Timer')
+                        }} 
+                        Image={timerSource}
+                        draggable>
+                        </DivImg>
+                        <DivImg className="dndnode input" 
+                        style={{width: '150px', display: 'inline-block',marginRight: '50px'}}
+                        onDragStart={(event) => {
+                            onDragStart(event,'input');
+                            onImage1Concat(beeperSource, 'Beeper')
+                        }}
+                        Image={beeperSource}
+                        draggable>
+                        </DivImg>
+                        <DivImg className="dndnode input" 
+                        style={{width: '80px', display: 'inline-block',marginRight: '50px'}}
+                        onDragStart={(event) => {
+                            onDragStart(event,'input');
+                            onImage1Concat(conditionSource, 'Splitter')
+                        }} 
+                        Image={conditionSource}
+                        draggable>
+                        </DivImg>
                         
-                        <Icon onClick={() => onImage1Concat(lightSource, "Light")} className='icons'/>
-                        <Img src={lightSource} 
-                        alt="beeper" />
-                    </div>
-    
-                    <div className="third-Slide" onTouchEnd={() => {
-                    }}>
-                        <Icon onClick={() => onImage1Concat(magSource, "Magnetic")} className='icons'/>
-                        <Img src={magSource} 
-                        alt="mag" style={{marginRight: '20px'}}/>
-    
-                        <Icon onClick={() => onImage1Concat(tempSource, "Temperature")} className='icons'/>
-                        <Img src={tempSource} 
-                        alt="temp" />
-                        
-                        <MiddleIconDesk onClick={() => onImage1Concat(motorSource, "Motor")} className='icons'/>
-                        <Img src={motorSource} 
-                        alt="motor" 
-                        style={{
-                        marginLeft: '20px',
-                        marginRight: '20px'
-                        }}/>
-                        
-                        <Icon onClick={() => onImage1Concat(soundSource, "Sound")} className='icons'/>
-                        <Img src={soundSource} 
-                        alt="sound" />
-                        <Icon onClick={() => onImage1Concat(splitterSource, "Condition")} className='icons'/>
-                        <Img src={splitterSource} 
-                        alt="sound" />
-                    </div>
+                    </BottomComponents>
+                    <BottomComponents className="bottom-component"
+                     onTouchEnd={() => {
+                        }}>
+                        <DivImg className="dndnode input" 
+                        style={{width: '15%', display: 'inline-block', height: '105px', marginRight: '50px',}}
+                        onDragStart={(event) => {
+                            onDragStart(event,'input');
+                            onImage1Concat(piaono, 'Piano')
+                        }} 
+                        Image={piaono}
+                        draggable>
+                        </DivImg>
+                        <DivImg className="dndnode input" 
+                        style={{width: '15%', display: 'inline-block',marginRight: '50px',height: '105px'}}
+                        onDragStart={(event) => {
+                            onDragStart(event,'input');
+                            onImage1Concat(dualSwitch, 'DualSwitch')
+                        }} 
+                        Image={dualSwitch}
+                        draggable>
+                        </DivImg>
+                        <DivImg className="dndnode input" 
+                        style={{width: '15%', display: 'inline-block',marginRight: '50px',height: '105px'}}
+                        onDragStart={(event) => {
+                            onDragStart(event,'input');
+                            onImage1Concat(tactSource, 'Tact')
+                        }}
+                        Image={tactSource}
+                        draggable>
+                        </DivImg>
+                        <DivImg className="dndnode input" 
+                        style={{width: '15%', display: 'inline-block',marginRight: '50px',height: '105px'}}
+                        onDragStart={(event) => {
+                            onDragStart(event,'input');
+                            onImage1Concat(ledSource, 'LED')
+                        }} 
+                        Image={ledSource}
+                        draggable>
+                        </DivImg>
+                    </BottomComponents>
+
+                    <BottomComponents className="bottom-component"
+                     onTouchEnd={() => {
+                        }}>
+                        <DivImg className="dndnode input" 
+                        style={{width: '15%', display: 'inline-block',marginRight: '50px'}}
+                        onDragStart={(event) => {
+                            onDragStart(event,'input');
+                            onImage1Concat(usbSource, 'USB')
+                        }} 
+                        Image={usbSource}
+                        draggable>
+                        </DivImg>
+                        <DivImg className="dndnode input" 
+                        style={{width: '15%', display: 'inline-block',marginRight: '50px'}}
+                        onDragStart={(event) => {
+                            onDragStart(event,'input');
+                            onImage1Concat(resistorSource, 'Resistor')
+                        }} 
+                        Image={resistorSource}
+                        draggable>
+                        </DivImg>
+                        <DivImg className="dndnode input" 
+                        style={{width: '15%', display: 'inline-block',marginRight: '50px'}}
+                        onDragStart={(event) => {
+                            onDragStart(event,'input');
+                            onImage1Concat(ledGlowSource, 'LEDGLOW')
+                        }} 
+                        Image={ledGlowSource}
+                        draggable>
+                        </DivImg>
+                        <DivImg className="dndnode input" 
+                        style={{width: '15%', display: 'inline-block',marginRight: '50px'}}
+                        onDragStart={(event) => {
+                            onDragStart(event,'input');
+                            onImage1Concat(transistorSource, 'Transistor')
+                        }} 
+                        Image={transistorSource}
+                        draggable>
+                        </DivImg>
+                    </BottomComponents>
+
+                    <BottomComponents className="bottom-component"
+                     onTouchEnd={() => {
+                        }}>
+                        <DivImg className="dndnode input" 
+                        style={{width: '15%', display: 'inline-block', height: '105px', marginRight: '50px',}}
+                        onDragStart={(event) => {
+                            onDragStart(event,'input');
+                            onImage1Concat(ldrSource, 'LDR')
+                        }} 
+                        Image={ldrSource}
+                        draggable>
+                        </DivImg>
+                        <DivImg className="dndnode input" 
+                        style={{width: '15%', display: 'inline-block',marginRight: '50px',height: '105px'}}
+                        onDragStart={(event) => {
+                            onDragStart(event,'input');
+                            onImage1Concat(diodeSource, 'Diode')
+                        }} 
+                        Image={diodeSource}
+                        draggable>
+                        </DivImg>
+                        <DivImg className="dndnode input" 
+                        style={{width: '15%', display: 'inline-block',marginRight: '50px',height: '105px'}}
+                        onDragStart={(event) => {
+                            onDragStart(event,'input');
+                            onImage1Concat(capacitorSource, 'Capacitor')
+                        }}
+                        Image={capacitorSource}
+                        draggable>
+                        </DivImg>
+                        <DivImg className="dndnode input" 
+                        style={{width: '15%', display: 'inline-block',marginRight: '50px',height: '105px'}}
+                        onDragStart={(event) => {
+                            onDragStart(event,'input');
+                            onImage1Concat(potSource, 'POT')
+                        }} 
+                        Image={potSource}
+                        draggable>
+                        </DivImg>
+                    </BottomComponents>
                     </ReactSwipe>
             </>
             {/* Swipeable Dots End */}

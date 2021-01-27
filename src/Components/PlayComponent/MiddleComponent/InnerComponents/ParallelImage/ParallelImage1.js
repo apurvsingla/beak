@@ -17,3 +17,4 @@ const ParallelImage1 = ({i,index,currentActiveTop}) => {
 }
 
 export default ParallelImage1;
+

@@ -32,11 +32,11 @@ const ModeComponent = () => {
 
     React.useEffect(() => {
         if(location.pathname === '/fan'){
-        axios.get(`http://localhost:8000/fanData`).then(res => setData(res.data));
+        axios.get(`https://beak-server.herokuapp.com/fanData`).then(res => setData(res.data));
         }else if(location.pathname === '/lamp'){
-        axios.get(`http://localhost:8000/lampData`).then(res => setData(res.data));
+        axios.get(`https://beak-server.herokuapp.com/lampData`).then(res => setData(res.data));
         }else{
-        axios.get(`http://localhost:8000/pianoData`).then(res => setData(res.data));
+        axios.get(`https://beak-server.herokuapp.com/pianoData`).then(res => setData(res.data));
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

@@ -58,9 +58,10 @@ const DnDFlow = ({image,setImage,ids,setId,
   // }
 
   const onDrop = (event) => {
+    // console.log(event)
     event.preventDefault();
     const type = event.dataTransfer.getData('application/reactflow');
-    const position = reactFlowInstance.project({ x: event.clientX-100, y: event.clientY - 140 });
+    const position = reactFlowInstance.project({ x: event.clientX-300, y: event.clientY -40});
     const text = ()=>{
       const data = (JSON.parse(sessionStorage.getItem("normal-img")));
       const d = (data[data.length-1].src);

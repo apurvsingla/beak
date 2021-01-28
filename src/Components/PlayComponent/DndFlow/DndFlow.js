@@ -3,7 +3,7 @@ import ReactFlow, { ReactFlowProvider,addEdge, removeElements, Controls , Handle
 import ConnectionLine from './ConnectionLine';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-// import useSessionStorage from '../../SessionStorage/SessionStorage';
+import { v4 } from 'uuid';
 import './dnd.css';
 
 let id = 0;
@@ -14,22 +14,19 @@ const DnDFlow = ({image,setImage,ids,setId,
 }) => {
   const onConnect = (params) => {params.animated = true; setElements((els) => addEdge(params, els))};
   const onElementsRemove = (elementsToRemove) => setElements((els) => removeElements(elementsToRemove, els));
-
+  let count = 1;
   const onLoad = (_reactFlowInstance) => setReactFlowInstance(_reactFlowInstance);
-  // const [glow,setGlow] = React.useState(false);
-
   const onDragOver = (event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
   };
-
   const onClickEvent=(e) => {
     console.log(elements)
     const newArray = [...image];
     newArray.forEach((i,index) => {
       const arr = newArray[index]
       if(arr.id === ids-1){
-          newArray.splice(index,ids)
+          newArray.splice(ids,1)
       }
     setId(ids);
     });
@@ -38,27 +35,7 @@ const DnDFlow = ({image,setImage,ids,setId,
     setElements(elements);
   } 
 
-  // const glowEffect = () => {
-  //   const newArray = [...elements];
-  //   newArray.forEach((i,index) => {
-        // const pos = newArray[index];
-  //       if(i.alt === "Beeper"){
-  //           if(press){
-  //               newArray[index] = [...newArray, {glow: glow}]
-  //               setGlow(true);
-  //           } 
-  //           return(<span 
-  //               style={{width: '25px', height: '25px', 
-  //               backgroundColor: 'red', opacity: '0.9', 
-  //               borderRadius: '100px'}}
-  //               />)
-  //       }      
-  //   })
-  //   setElements(newArray);
-  // }
-
   const onDrop = (event) => {
-    // console.log(event)
     event.preventDefault();
     const type = event.dataTransfer.getData('application/reactflow');
     const position = reactFlowInstance.project({ x: event.clientX-300, y: event.clientY -40});
@@ -73,40 +50,62 @@ const DnDFlow = ({image,setImage,ids,setId,
         style={{
           backgroundImage: `url(${d})`, 
           transform: `${rotate? 'rotate(90deg)': 'rotate(0deg)'}`
-        }}></div>
+        }}
+        id="image-render"
+        key={v4()}>
+          {alt === 'Beeper' ? <span className="span"
+          id="spanId"
+          key={v4()}
+          style={{backgroundColor: 'none'}}
+          /> : null }
+          {/* <span
+          id="rotate"
+          style={{
+            position: "absolute",
+            zIndex: '55',
+            top: '35px',
+            left: '65px', 
+          }}
+          onClick={() => {
+            // setRotate(true);
+          }}>Rotate</span> */}
+          
+        </div>
         {alt === "Power" ? !rotate ? 
         <>
           <Handle type="source" position="right" id={getId()} 
-          style={{ top: 50, background: '#555', left: 115, }} />
+          style={{ top: 50, background: '#555', left: 115, }} 
+          key={v4()}/>
           <Handle type="source" position="right" id={getId()} 
-          style={{ top: 70, background: '#555', left: 115, }} />
+          style={{ top: 70, background: '#555', left: 115, }} 
+          key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
           style={{position: 'relative', top: '-117px', left: '97px',
-          background: 'white', borderRadius: '100px'}} />
+          background: 'white', borderRadius: '100px'}} key={v4()}/>
         </> :  
         <>
           <Handle type="source" position="right" id={getId()} 
-          style={{ top: 95, background: '#555', left: 95, }} />
+          style={{ top: 95, background: '#555', left: 95, }} key={v4()}/>
           <Handle type="source" position="right" id={getId()} 
-          style={{ top: 95, background: '#555', left: 45, }} />
+          style={{ top: 95, background: '#555', left: 45, }} key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
           style={{position: 'relative', top: '-105px', left: '107px',
-          background: 'white', borderRadius: '100px'}} />
+          background: 'white', borderRadius: '100px'}} key={v4()}/>
         </> : null}
        
         {alt === "Splitter" ? 
         <> 
           <Handle type="source" position="right" id={getId()} 
-          style={{ top: 3, background: '#555', left: 67, }} />
+          style={{ top: 3, background: '#555', left: 67, }} key={v4()}/>
           <Handle type="source" position="right" id={getId()} 
-          style={{ top: 120, background: '#555', left: 67 }} />
+          style={{ top: 120, background: '#555', left: 67 }} key={v4()}/>
           <Handle type="source" position="right" id={getId()} 
-          style={{ top: 62, background: '#555', left: 15, }} />
+          style={{ top: 62, background: '#555', left: 15, }} key={v4()}/>
           <Handle type="source" position="right" id={getId()} 
-          style={{ top: 62, background: '#555', left: 120 }} />
+          style={{ top: 62, background: '#555', left: 120 }} key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
           style={{position: 'relative', top: '-70px', left: '62px',
-          background: 'white', borderRadius: '100px'}} />
+          background: 'white', borderRadius: '100px'}} key={v4()}/>
         </>: null}
        
         {alt === "LEDGLOW" || alt === "Resistor" ||alt === "LDR" ||
@@ -114,21 +113,21 @@ const DnDFlow = ({image,setImage,ids,setId,
         rotate ?
         <>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 0, background: '#555', left: 40, }} />
+          style={{ top: 0, background: '#555', left: 40, }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 102, background: '#555', left: 40 }} />
+          style={{ top: 102, background: '#555', left: 40 }} key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
           style={{position: 'relative', top: '-147px', left: '82px',
-          background: 'white', borderRadius: '100px'}} />
+          background: 'white', borderRadius: '100px'}} key={v4()}/>
         </>: 
         <>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 62, background: '#555', left: -13, }} />
+          style={{ top: 62, background: '#555', left: -13, }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 62, background: '#555', left: 145 }} />
+          style={{ top: 62, background: '#555', left: 145 }} key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
           style={{position: 'relative', top: '-91px', left: '138px',
-          background: 'white', borderRadius: '100px'}} />
+          background: 'white', borderRadius: '100px'}} key={v4()}/>
         </>
         :null} 
 
@@ -136,159 +135,174 @@ const DnDFlow = ({image,setImage,ids,setId,
         <FiberManualRecordIcon
           style={{position: 'relative', top: '-95px', 
           left: '62px', borderRadius: '100px'}}
-          onClick={() => setPress(!press)}/>
+          onClick={() => {
+            setPress(!press);
+            let spanId = document.querySelectorAll('#spanId');
+            if(count === 1){
+             return Object.values(spanId).map(i => {
+                count = 0;
+                return i.style.backgroundColor= "red";
+              });
+            }
+           else{
+             return Object.values(spanId).map(i => {
+                count = 1;
+                return i.style.backgroundColor= "transparent";
+            });
+        }
+          
+        }} key={v4()}/>
         :null}
 
         {alt === "Beeper" ? rotate ?
         <>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 0, background: '#555', left: 40, }} />
+          style={{ top: 0, background: '#555', left: 40, }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 102, background: '#555', left: 40 }} />
+          style={{ top: 102, background: '#555', left: 40 }} key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
           style={{position: 'relative', top: '-141px', left: '98px',
-          background: 'white', borderRadius: '100px'}} />
+          background: 'white', borderRadius: '100px'}} key={v4()}/>
         </>: 
         <>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 62, background: '#555', left: -13, }} />
+          style={{ top: 62, background: '#555', left: -13, }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 62, background: '#555', left: 145 }} />
+          style={{ top: 62, background: '#555', left: 145 }} key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
           style={{position: 'relative', top: '-107px', left: '134px',
-          background: 'white', borderRadius: '100px'}} />
+          background: 'white', borderRadius: '100px'}} key={v4()}/>
         </>
         :null} 
 
         {alt === 'Transistor' ? !rotate?
         <>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 65, background: '#555', left: -13, }} />
+          style={{ top: 65, background: '#555', left: -13, }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 55, background: '#555', left: 145 }} />
+          style={{ top: 55, background: '#555', left: 145 }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 80, background: '#555', left: 145 }} />
+          style={{ top: 80, background: '#555', left: 145 }} key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
           style={{position: 'relative', top: '-97px', left: '132px',
           background: 'white', borderRadius: '100px'}} 
-          stroke="grey"/>
+          stroke="grey" key={v4()}/>
         </>
         :<>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: -15, background: '#555', left: 62, }} />
+          style={{ top: -15, background: '#555', left: 62, }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 135, background: '#555', left: 45 }} />
+          style={{ top: 135, background: '#555', left: 45 }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 135, background: '#555', left: 72 }} />
+          style={{ top: 135, background: '#555', left: 72 }} key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
           style={{position: 'relative', top: '-145px', left: '88px',
-          
-          background: 'white', borderRadius: '100px'}} />
+          background: 'white', borderRadius: '100px'}} key={v4()}/>
         </>:null}    
 
         {alt === "DualSwitch"  ? !rotate ?
         <>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 67, background: '#555', left: -13, }} />
+          style={{ top: 67, background: '#555', left: -13, }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 50, background: '#555', left: 145 }} />
+          style={{ top: 50, background: '#555', left: 145 }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 82, background: '#555', left: 145 }} />
+          style={{ top: 82, background: '#555', left: 145 }} key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
           style={{position: 'relative', top: '-102px', left: '134px',
-          background: 'white', borderRadius: '100px'}} />
+          background: 'white', borderRadius: '100px'}} key={v4()}/>
         </>
         :<>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: -15, background: '#555', left: 62, }} />
+          style={{ top: -15, background: '#555', left: 62, }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 135, background: '#555', left: 45 }} />
+          style={{ top: 135, background: '#555', left: 45 }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 135, background: '#555', left: 75 }} />
+          style={{ top: 135, background: '#555', left: 75 }} key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
           style={{position: 'relative', top: '-145px', left: '92px',
-          background: 'white', borderRadius: '100px'}} />
+          background: 'white', borderRadius: '100px'}} key={v4()}/>
         </>:null} 
 
         {alt === 'POTENTIOMETER' ? !rotate ?
         <>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 62, background: '#555', left: -10, }} />
+          style={{ top: 62, background: '#555', left: -10, }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 40, background: '#555', left: 145 }} />
+          style={{ top: 40, background: '#555', left: 145 }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 84, background: '#555', left: 145 }} />
+          style={{ top: 84, background: '#555', left: 145 }} key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
           style={{position: 'relative', top: '-110px', left: '137px',
-          background: 'white', borderRadius: '100px'}} />
+          background: 'white', borderRadius: '100px'}} key={v4()}/>
 
         </>
         :<>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: -15, background: '#555', left: 64, }} />
+          style={{ top: -15, background: '#555', left: 64, }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 135, background: '#555', left: 45 }} />
+          style={{ top: 135, background: '#555', left: 45 }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 135, background: '#555', left: 85 }} />
+          style={{ top: 135, background: '#555', left: 85 }} key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
           style={{position: 'relative', top: '-147px', left: '97px',
-          background: 'white', borderRadius: '100px'}} />
+          background: 'white', borderRadius: '100px'}} key={v4()}/>
         </>:null} 
 
         {alt === 'Timer' ? !rotate ?
         <>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 50, background: '#555', left: -13, }} />
+          style={{ top: 50, background: '#555', left: -13, }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 70, background: '#555', left: -13, }} />
+          style={{ top: 70, background: '#555', left: -13, }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 90, background: '#555', left: -13, }} />
+          style={{ top: 90, background: '#555', left: -13, }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 30, background: '#555', left: -13, }} />
+          style={{ top: 30, background: '#555', left: -13, }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 55, background: '#555', left: 145 }} />
+          style={{ top: 55, background: '#555', left: 145 }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
-          style={{ top: 80, background: '#555', left: 145 }} />
+          style={{ top: 80, background: '#555', left: 145 }} key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
           style={{position: 'relative', top: '-116px', left: '136px',
-          background: 'white', borderRadius: '100px'}} />
+          background: 'white', borderRadius: '100px'}} key={v4()}/>
         </>
         :<>
         <Handle type="source" position="left" id={getId()} 
-        style={{ top: 50, background: '#555', left: 20, }} />
+        style={{ top: 50, background: '#555', left: 20, }} key={v4()}/>
         <Handle type="source" position="left" id={getId()} 
-        style={{ top: 70, background: '#555', left: 20, }} />
+        style={{ top: 70, background: '#555', left: 20, }} key={v4()}/>
         <Handle type="source" position="left" id={getId()} 
-        style={{ top: 90, background: '#555', left: 20, }} />
+        style={{ top: 90, background: '#555', left: 20, }} key={v4()}/>
         <Handle type="source" position="left" id={getId()} 
-        style={{ top: 30, background: '#555', left: 20, }} />
+        style={{ top: 30, background: '#555', left: 20, }} key={v4()}/>
         <Handle type="source" position="left" id={getId()} 
-        style={{ top: 55, background: '#555', left: 115 }} />
+        style={{ top: 55, background: '#555', left: 115 }} key={v4()}/>
         <Handle type="source" position="left" id={getId()} 
-        style={{ top: 80, background: '#555', left: 115 }} />
+        style={{ top: 80, background: '#555', left: 115 }} key={v4()}/>
         <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
         style={{position: 'relative', top: '-147px', left: '105px',
-        background: 'white', borderRadius: '100px'}} />
+        background: 'white', borderRadius: '100px'}} key={v4()}/>
         </>: null}
 
         {alt === "USB"? !rotate ? 
         <>
         <Handle type="source" position="left" id={getId()} 
-        style={{ top: 40, background: '#555', left: 145 }} />
+        style={{ top: 40, background: '#555', left: 145 }} key={v4()}/>
         <Handle type="source" position="left" id={getId()} 
-        style={{ top: 95, background: '#555', left: 145 }} />
+        style={{ top: 95, background: '#555', left: 145 }} key={v4()}/>
         <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
         style={{position: 'relative', top: '-114px', left: '135px',
-        background: 'white', borderRadius: '100px'}} />
+        background: 'white', borderRadius: '100px'}} key={v4()}/>
         </>
         :<>
         <Handle type="source" position="left" id={getId()} 
-        style={{ top: 40, background: '#555', left: 110 }} />
+        style={{ top: 40, background: '#555', left: 110 }} key={v4()}/>
         <Handle type="source" position="left" id={getId()} 
-        style={{ top: 95, background: '#555', left: 110 }} />
+        style={{ top: 95, background: '#555', left: 110 }} key={v4()}/>
         <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
         style={{position: 'relative', top: '-145px', left: '104px',
-        background: 'white', borderRadius: '100px'}} />
+        background: 'white', borderRadius: '100px'}} key={v4()}/>
         </>:null} 
 
         {/* {press===true && (alt === 'Beeper' || alt === 'LEDGLOW') ? <FiberManualRecordIcon 

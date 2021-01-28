@@ -107,26 +107,22 @@ const PlayComponent = () => {
     const [count, setCount] = useState(0);
     const [press, setPress] = useState(false);
 
-    const glowEffect = () => {
-        const newArray = [...elements];
-        newArray.forEach((i,index) => {
-            console.log(i)
-            if(i.alt === "Beeper"){
-                console.log('yes')
-                if(press){
-                    newArray[index] = [...newArray, {glow: glow}]
-                    setGlow(true);
-                    
-                    return(<span 
-                        style={{width: '25px', height: '25px', 
-                        backgroundColor: 'red', opacity: '0.9', 
-                        borderRadius: '100px'}}
-                        />)
-                } 
-            }      
-        })
-        setElements(newArray);
-    }
+    // const glowEffect = () => {
+    //     const newArray = [...elements];
+    //     newArray.forEach((i,index) => {
+    //         if(i.alt === "Beeper"){
+    //             const newObj = {...i.data.label.props.children[0].props.children.props.style, backgroundColor: 'red'}
+    //             // i.data.label.props.children[0].props.children.props.style.backgroundColor = 'red';
+    //             // Object.assign({},i.data.label.props.children[0].props.children.props.style, 
+    //             //     {backgroundColor: 'red'})
+    //             console.log(newObj) 
+    //         }      
+    //     })
+    //     setElements(newArray);
+    // }
+
+
+
 
 
     let incr = 0;
@@ -202,11 +198,12 @@ const PlayComponent = () => {
             </DescSpan>
 
             {count === 0 ? 
-            <PosButton color={'grey'} back={'white'}
+            <PosButton id="soumityaCLICK" color={'grey'} back={'white'}
             onClick={() => {
                 setRotate(!rotate);
                 setCount(1);
-                glowEffect()
+                let spanId = document.getElementById('spanId');
+                spanId.style.backgroundColor= "red"
             }}
             >Rotate Next Elements
             </PosButton> 
@@ -238,6 +235,7 @@ const PlayComponent = () => {
                 setPress={setPress}
                 />
                 {/* {glowEffect()} */}
+                
             </Scrollbars>
             <BottomComponent onImage1Concat={onImage1Concat} />
         </div>

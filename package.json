@@ -25,6 +25,7 @@
     "react-swipe": "^6.0.4",
     "reactjs-popup": "^2.0.4",
     "styled-components": "^5.2.1",
+    "uuid": "^8.3.2",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

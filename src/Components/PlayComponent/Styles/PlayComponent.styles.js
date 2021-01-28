@@ -89,3 +89,36 @@ export const MiddleIconDesk = styled(AddCircleIcon)`
         bottom: 51px;
     }
 `;
+
+export const DescSpan = styled.span`
+    position: absolute;
+    left: 2vw;
+    top: 35vh;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: grey;
+`;
+
+export const PosButton = styled.button`
+    position: absolute;
+    left: 4vw;
+    top: 30vh;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color:  ${props => props.color};
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    background-color:  ${props => props.back};
+    padding: 2px;
+`;
+
+export const CoverDiv = styled.div`
+    width: 18vw;
+    height: 60vh;
+    background-color: white;
+    position: absolute;
+    top: 35vh;
+    left: 2vw;
+`;

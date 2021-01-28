@@ -108,3 +108,14 @@ path.react-flow__edge-path{
   animation: dashdraw .2s linear infinite;
   z-index: 100;
 }
+
+.Image-render{
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 120px;
+  width: 177px;
+  position: relative;
+  z-index: -4;
+  right: 14px;
+}

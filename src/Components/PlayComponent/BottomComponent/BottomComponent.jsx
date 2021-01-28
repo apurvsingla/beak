@@ -206,7 +206,7 @@ const BottomComponent = ({
                         style={{width: '15%', display: 'inline-block',marginRight: '50px',height: '105px'}}
                         onDragStart={(event) => {
                             onDragStart(event,'input');
-                            onImage1Concat(potSource, 'POT')
+                            onImage1Concat(potSource, 'POTENTIOMETER')
                         }} 
                         Image={potSource}
                         draggable>

@@ -1,29 +1,14 @@
 /* eslint-disable no-unused-vars */
 import React,{useState} from 'react';
 import {Graph, 
-LevelIcon, BackIcon, RetryIcon,
+LevelIcon, BackIcon, RetryIcon,DescSpan,
+PosButton,CoverDiv
 } from './Styles/PlayComponent.styles';
 import ScrollLock  from 'react-scrolllock';
 import {
-// piaono,
-// conditionSource,
-// resistorSource,
-// tactSource,
-// beeperSource,
-// ledSource,
-powerSource,
-// timerSource,
-// dualSwitch,
-// ldrSource,
-// diodeSource,
-// capacitorSource,
-// potSource,
-// usbSource,
-// transistorSource,
 leftImageSource
 } from '../Source/Source';
 import './Styles/play.styles.scss';
-
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
@@ -32,7 +17,7 @@ import {useSessionStorage} from '../SessionStorage/SessionStorage';
 import { Scrollbars } from 'react-custom-scrollbars';
 import {useHistory} from 'react-router-dom';
 import BottomComponent from './BottomComponent/BottomComponent';
-import MiddleComponent from './MiddleComponent/MiddleComponent';
+// import MiddleComponent from './MiddleComponent/MiddleComponent';
 import axios from "axios";
 import DnDFlow from './DndFlow/DndFlow';
 
@@ -44,52 +29,58 @@ const PlayComponent = () => {
     const [normalImg, setNormalImg] = useSessionStorage('normal-img', []);
     const [num, setNum] = useSessionStorage('glow-id', 0);
     const [id, setId] = useSessionStorage('id', 0);
-    const [idTop, setIdTop] = useSessionStorage('id-top', 0);
-    const [idBottom, setIdBottom] = useSessionStorage('id-Bottom', 0);
-    const [idTwoWayTopRight, setIdTwoWayTopRight] = useSessionStorage('id-two-way-switch-top-right', 0);
-    const [idTwoWayBottomRight, setIdTwoWayBottomRight] = useSessionStorage('id-two-way-bottom-right',0);
+    // const [idTop, setIdTop] = useSessionStorage('id-top', 0);
+    // const [idBottom, setIdBottom] = useSessionStorage('id-Bottom', 0);
+    // const [idTwoWayTopRight, setIdTwoWayTopRight] = useSessionStorage('id-two-way-switch-top-right', 0);
+    // const [idTwoWayBottomRight, setIdTwoWayBottomRight] = useSessionStorage('id-two-way-bottom-right',0);
     
-    const [activeTWTop, setActiveTWTop] = useSessionStorage('active-two-way-top-right', {});
-    const [activeTWBottom,setActiveTWBottom] = useSessionStorage('active-Tw-Bottom', {});
+    // const [activeTWTop, setActiveTWTop] = useSessionStorage('active-two-way-top-right', {});
+    // const [activeTWBottom,setActiveTWBottom] = useSessionStorage('active-Tw-Bottom', {});
     
 
-    const [activeTop, setActiveTop] = useSessionStorage('active-top-condition', {});
-    const [currentActiveTop, setCurrentActiveTop] = React.useState(null);
-    const [activeTopBoolean,setActiveTopBoolean] = React.useState(false);
+    // const [activeTop, setActiveTop] = useSessionStorage('active-top-condition', {});
+    // const [currentActiveTop, setCurrentActiveTop] = React.useState(null);
+    // const [activeTopBoolean,setActiveTopBoolean] = React.useState(false);
 
-    const [activeBottom, setActiveBottom] = useSessionStorage('active-bottom-condition', {});
-    const [currentActiveBottom, setCurrentActiveBottom] = React.useState(null);
-    const [activeBottomBoolean,setActiveBottomBoolean] = React.useState(false);
-    const [booleanTwTop,setBooleanTwTop] = React.useState(false);
-    const [booleanTwBottom,setBooleanTwBottom] = React.useState(false);
+    // const [activeBottom, setActiveBottom] = useSessionStorage('active-bottom-condition', {});
+    // const [currentActiveBottom, setCurrentActiveBottom] = React.useState(null);
+    // const [activeBottomBoolean,setActiveBottomBoolean] = React.useState(false);
+    // const [booleanTwTop,setBooleanTwTop] = React.useState(false);
+    // const [booleanTwBottom,setBooleanTwBottom] = React.useState(false);
 
 
-    const [bottomArrow, setBottomArrow] = React.useState(true);
-    const [even, setEven] = React.useState(1);
+    // const [bottomArrow, setBottomArrow] = React.useState(true);
+    // const [even, setEven] = React.useState(1);
     // Modal
     const [open, setOpen] = useState(false);
     const [clicked, setClicked] = useState(false);
     const [value, setValue] = useState(null);
     const closeModal = () => setOpen(false);
-
+    const [reactFlowInstance, setReactFlowInstance] = useState(null);
+    const [elements, setElements] = useState([]);
+    const [rotate, setRotate] = useState(false);
+    const [glow,setGlow] = useState(false);
     const data = {
         normalImg: [...normalImg, value],
     }
 
     const save = () => axios.post('https://beak-server.herokuapp.com/fan', data).then((res) => {
-        console.log(res.data)
+        console.log(res.data);
     }).catch((error) => {
-        console.log(error)
+        console.log(error);
     });
 
     const reset = () => {
         setNormalImg([]);
         setId(0);
         setNum(0);
-        setIdTop(0);
-        setIdBottom(0);
-        setIdTwoWayTopRight(0);
-        setIdTwoWayBottomRight(0);
+        // setIdTop(0);
+        // setIdBottom(0);
+        // setIdTwoWayTopRight(0);
+        // setIdTwoWayBottomRight(0);
+        setReactFlowInstance(null);
+        setElements([]);
+        window.location.reload();
     }
 
     const back = () => {
@@ -111,6 +102,30 @@ const PlayComponent = () => {
             glowId: num}));
         setId(id+1);
         setNum(num+1);             
+    }
+
+    const [count, setCount] = useState(0);
+    const [press, setPress] = useState(false);
+
+    const glowEffect = () => {
+        const newArray = [...elements];
+        newArray.forEach((i,index) => {
+            console.log(i)
+            if(i.alt === "Beeper"){
+                console.log('yes')
+                if(press){
+                    newArray[index] = [...newArray, {glow: glow}]
+                    setGlow(true);
+                    
+                    return(<span 
+                        style={{width: '25px', height: '25px', 
+                        backgroundColor: 'red', opacity: '0.9', 
+                        borderRadius: '100px'}}
+                        />)
+                } 
+            }      
+        })
+        setElements(newArray);
     }
 
 
@@ -181,72 +196,50 @@ const PlayComponent = () => {
                 return(<></>)
                 
             })}
-            <div 
-                style={{
-                    width: '18vw',
-                    height: '60vh',
-                    backgroundColor: 'white',
-                    position: 'absolute',
-                    top: '35vh',
-                    left: '2vw'
-                }}
-                />
-            <span
-            style={{
-                position: 'absolute',
-                left: '2vw',
-                top: '35vh',
-                fontSize: '1.8rem',
-                fontWeight: '600',
-                color: 'grey'
+            <CoverDiv />
+            <DescSpan>
+                Description:
+            </DescSpan>
+
+            {count === 0 ? 
+            <PosButton color={'grey'} back={'white'}
+            onClick={() => {
+                setRotate(!rotate);
+                setCount(1);
+                glowEffect()
             }}
-            >Description:</span>
-            <BackIcon 
-                    onClick={() => back()}
-                />
+            >Rotate Next Elements
+            </PosButton> 
+            :
+            <PosButton color={'green'} back={'white'}
+            onClick={() => {
+                setRotate(!rotate);
+                setCount(0);
+            }}
+            >Rotate Next Elements
+            </PosButton>}
+
+            <BackIcon onClick={() => back()} />
 
             {/* Graph */}
             <Scrollbars style={{ width: '78vw', height: '80vh', left: '22vw', position: 'absolute', top: '0',}}>
                 <Graph normalImg={normalImg.length} style={{zIndex: '-1'}}/>
-                <RetryIcon
-                    onClick={() => reset()}
-                />
+                <RetryIcon onClick={() => reset()} />
                 <LevelIcon />
                 <DnDFlow 
                 image={normalImg} ids={id}
                 setId={setId}
                 setImage={setNormalImg}
+                setReactFlowInstance={setReactFlowInstance}
+                elements={elements}
+                reactFlowInstance={reactFlowInstance}
+                setElements={setElements}
+                rotate={rotate} press={press}
+                setPress={setPress}
                 />
-                {/* <MiddleComponent 
-                image={normalImg} id={id}
-                setId={setId}
-                setImage={setNormalImg}
-                newImage={newImage} activeTop={activeTop}
-                //top
-                setActiveTop={setActiveTop} currentActiveTop={currentActiveTop}
-                setCurrentActiveTop={setCurrentActiveTop} 
-                setActiveTopBoolean={setActiveTopBoolean}
-                activeTopBoolean={activeTopBoolean} 
-                //bottom
-                setBottomArrow={setBottomArrow}
-                bottomArrow={bottomArrow} activeBottom={activeBottom}
-                setActiveBottom={setActiveBottom} 
-                currentActiveBottom={currentActiveBottom}
-                setCurrentActiveBottom={setCurrentActiveBottom} 
-                setActiveBottomBoolean={setActiveBottomBoolean}
-                activeBottomBoolean={activeBottomBoolean}
-
-                //two way switch
-                activeTWTop={activeTWTop} activeTWBottom={activeTWBottom} setActiveTWTop={setActiveTWTop}
-                setActiveTWBottom={setActiveTWBottom} booleanTwTop={booleanTwTop}
-                setBooleanTwTop={setBooleanTwTop} setBooleanTwBottom={setBooleanTwBottom}
-                booleanTwBottom={booleanTwBottom}
-                /> */}
+                {/* {glowEffect()} */}
             </Scrollbars>
-            {/* swipeable */}
-            <BottomComponent 
-            onImage1Concat={onImage1Concat}
-            />
+            <BottomComponent onImage1Concat={onImage1Concat} />
         </div>
     );
 }

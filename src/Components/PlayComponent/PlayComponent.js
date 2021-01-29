@@ -107,24 +107,6 @@ const PlayComponent = () => {
     const [count, setCount] = useState(0);
     const [press, setPress] = useState(false);
 
-    // const glowEffect = () => {
-    //     const newArray = [...elements];
-    //     newArray.forEach((i,index) => {
-    //         if(i.alt === "Beeper"){
-    //             const newObj = {...i.data.label.props.children[0].props.children.props.style, backgroundColor: 'red'}
-    //             // i.data.label.props.children[0].props.children.props.style.backgroundColor = 'red';
-    //             // Object.assign({},i.data.label.props.children[0].props.children.props.style, 
-    //             //     {backgroundColor: 'red'})
-    //             console.log(newObj) 
-    //         }      
-    //     })
-    //     setElements(newArray);
-    // }
-
-
-
-
-
     let incr = 0;
     return (
         <div style={{position: "absolute"}}>
@@ -198,12 +180,10 @@ const PlayComponent = () => {
             </DescSpan>
 
             {count === 0 ? 
-            <PosButton id="soumityaCLICK" color={'grey'} back={'white'}
+            <PosButton color={'grey'} back={'white'}
             onClick={() => {
                 setRotate(!rotate);
                 setCount(1);
-                let spanId = document.getElementById('spanId');
-                spanId.style.backgroundColor= "red"
             }}
             >Rotate Next Elements
             </PosButton> 
@@ -233,6 +213,7 @@ const PlayComponent = () => {
                 setElements={setElements}
                 rotate={rotate} press={press}
                 setPress={setPress}
+                normalImg={normalImg}
                 />
                 {/* {glowEffect()} */}
                 

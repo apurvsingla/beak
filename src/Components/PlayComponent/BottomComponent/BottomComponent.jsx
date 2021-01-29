@@ -4,12 +4,12 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ReactSwipe from 'react-swipe';
 import {
-piaono,
+// piaono,
 conditionSource,
 resistorSource,
 tactSource,
 beeperSource,
-ledSource,
+// ledSource,
 powerSource,
 timerSource,
 dualSwitch,
@@ -93,7 +93,7 @@ const BottomComponent = ({
                     <BottomComponents className="bottom-component"
                      onTouchEnd={() => {
                         }}>
-                        <DivImg className="dndnode input" 
+                        {/* <DivImg className="dndnode input" 
                         style={{width: '15%', display: 'inline-block', height: '105px', marginRight: '50px',}}
                         onDragStart={(event) => {
                             onDragStart(event,'input');
@@ -101,7 +101,7 @@ const BottomComponent = ({
                         }} 
                         Image={piaono}
                         draggable>
-                        </DivImg>
+                        </DivImg> */}
                         <DivImg className="dndnode input" 
                         style={{width: '15%', display: 'inline-block',marginRight: '50px',height: '105px'}}
                         onDragStart={(event) => {
@@ -120,7 +120,7 @@ const BottomComponent = ({
                         Image={tactSource}
                         draggable>
                         </DivImg>
-                        <DivImg className="dndnode input" 
+                        {/* <DivImg className="dndnode input" 
                         style={{width: '15%', display: 'inline-block',marginRight: '50px',height: '105px'}}
                         onDragStart={(event) => {
                             onDragStart(event,'input');
@@ -128,7 +128,7 @@ const BottomComponent = ({
                         }} 
                         Image={ledSource}
                         draggable>
-                        </DivImg>
+                        </DivImg> */}
                     </BottomComponents>
 
                     <BottomComponents className="bottom-component"

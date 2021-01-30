@@ -51,14 +51,29 @@ const getId = () => `dndnode_${id++}`;
 const DnDFlow = ({image,setImage,ids,setId,
   reactFlowInstance,setReactFlowInstance,
   elements,setElements,rotate, press, setPress,
-  normalImg
 }) => {
+  const [dimensions, setDimensions] = React.useState({ 
+    height: window.innerHeight,
+    width: window.innerWidth
+  })
+  React.useEffect(() => {
+  function handleResize() {
+          setDimensions({
+          height: window.innerHeight,
+          width: window.innerWidth
+          })
+          return _ => {
+          window.removeEventListener('resize', handleResize)
+          
+          }
+  }
+  window.addEventListener('resize', handleResize);
+  }) 
+
   const [play] = useSound(boopSfx);
   const onConnect = (params) => {
     console.log(elements);
     params.animated = true; 
-    // params.type = 'custom';
-    // params.arrowHeadType= 'arrowclosed';
     setElements((els) => addEdge(params, els));
   };
 
@@ -67,7 +82,7 @@ const DnDFlow = ({image,setImage,ids,setId,
     setElements((els) => updateEdge(params,els))
   }
 
-  const onElementsRemove = (elementsToRemove) => setElements((els) => removeElements(elementsToRemove, els));
+  const onElementsRemove = (elementsToRemove) => setElements((els) => {console.log(els); removeElements(elementsToRemove, els)});
   const onLoad = (_reactFlowInstance) => setReactFlowInstance(_reactFlowInstance);
   const onDragOver = (event) => {
     event.preventDefault();
@@ -78,9 +93,8 @@ const DnDFlow = ({image,setImage,ids,setId,
     newArray.forEach((i,index) => {
       const arr = newArray[index]
       if(arr.id === ids-1){
-          newArray.splice(ids,1)
+          newArray.splice(ids-1,1)
       }
-    setId(ids);
     });
     setImage(newArray);
     elements.splice(id);
@@ -114,12 +128,12 @@ const DnDFlow = ({image,setImage,ids,setId,
           /> : null }
           
         </div>
-        {alt === "Power" ? !rotate ? 
+        {alt === "Power Led" ? !rotate ? 
         <>
           <Handle type="source" position="right" id={getId()} 
           style={{ top: 50, background: '#555', left: 115, }} 
           key={v4()}/>
-          <Handle type="source" position="right" id={getId()} 
+          <Handle type="target" position="right" id={getId()} 
           style={{ top: 70, background: '#555', left: 115, }} 
           key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
@@ -129,7 +143,7 @@ const DnDFlow = ({image,setImage,ids,setId,
         <>
           <Handle type="source" position="right" id={getId()} 
           style={{ top: 95, background: '#555', left: 95, }} key={v4()}/>
-          <Handle type="source" position="right" id={getId()} 
+          <Handle type="target" position="right" id={getId()} 
           style={{ top: 95, background: '#555', left: 45, }} key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
           style={{position: 'relative', top: '-105px', left: '107px',
@@ -151,7 +165,7 @@ const DnDFlow = ({image,setImage,ids,setId,
           background: 'white', borderRadius: '100px'}} key={v4()}/>
         </>: null}
        
-        {alt === "LEDGLOW" || alt === "Resistor" ||alt === "LDR" ||
+        {alt === "LED" || alt === "Resistor" ||alt === "LDR" ||
         alt === "Diode" ||alt === "Capacitor" ||alt === "Tact" ? 
         rotate ?
         <>
@@ -428,7 +442,7 @@ const DnDFlow = ({image,setImage,ids,setId,
         <div className="reactflow-wrapper">
           <ReactFlow
           defaultZoom={0.8}
-          connectionMode={'loose'}
+          // connectionMode={'loose'}
           connectionLineComponent={ConnectionLine}
           elements={elements}
           onConnect={onConnect}
@@ -438,12 +452,13 @@ const DnDFlow = ({image,setImage,ids,setId,
           onDragOver={onDragOver}
           onEdgeUpdate={onUpdateEdge}
           multiSelectionKeyCode="Control"
-          // onClick={onConnectionRemove}
+          // onClick={onElementsRemove}
           key="edges"
           >
-            <Controls 
+            {dimensions.width > 892 ?<Controls 
             style={{position: 'fixed', bottom: '10px', left: '25vw',}}
-            />
+            /> : null}
+            
           </ReactFlow>
         </div>
       </ReactFlowProvider>

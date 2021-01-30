@@ -75,3 +75,38 @@
     .cursor{
       cursor: pointer;
     }
+
+.wrong-ele{
+  @media (min-width: 893px){
+    position: absolute;
+    left: 5vw;
+    color: red;
+    font-weight: 400;
+    font-size: 1.2rem;
+    top: 45vh;
+    z-index: 10;
+  }
+  @media (max-width: 892px){
+    position: fixed;
+    left: 4vw;
+    color: red;
+    bottom: 4vh;
+    z-index: 10;
+  }
+}
+
+
+.correct-ele{
+  @media (min-width: 893px){
+    position: absolute; 
+    top: 45vh; 
+    left: 4vw; 
+    z-index: 10;
+  }
+  @media (max-width: 892px){
+    position: fixed; 
+    bottom: 4vh; 
+    left: 4vw; 
+    z-index: 10;
+  }
+}

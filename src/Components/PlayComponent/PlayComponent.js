@@ -17,7 +17,6 @@ import {useSessionStorage} from '../SessionStorage/SessionStorage';
 import { Scrollbars } from 'react-custom-scrollbars';
 import {useHistory} from 'react-router-dom';
 import BottomComponent from './BottomComponent/BottomComponent';
-// import MiddleComponent from './MiddleComponent/MiddleComponent';
 import axios from "axios";
 import DnDFlow from './DndFlow/DndFlow';
 
@@ -29,29 +28,7 @@ const PlayComponent = () => {
     const [normalImg, setNormalImg] = useSessionStorage('normal-img', []);
     const [num, setNum] = useSessionStorage('glow-id', 0);
     const [id, setId] = useSessionStorage('id', 0);
-    // const [idTop, setIdTop] = useSessionStorage('id-top', 0);
-    // const [idBottom, setIdBottom] = useSessionStorage('id-Bottom', 0);
-    // const [idTwoWayTopRight, setIdTwoWayTopRight] = useSessionStorage('id-two-way-switch-top-right', 0);
-    // const [idTwoWayBottomRight, setIdTwoWayBottomRight] = useSessionStorage('id-two-way-bottom-right',0);
-    
-    // const [activeTWTop, setActiveTWTop] = useSessionStorage('active-two-way-top-right', {});
-    // const [activeTWBottom,setActiveTWBottom] = useSessionStorage('active-Tw-Bottom', {});
-    
 
-    // const [activeTop, setActiveTop] = useSessionStorage('active-top-condition', {});
-    // const [currentActiveTop, setCurrentActiveTop] = React.useState(null);
-    // const [activeTopBoolean,setActiveTopBoolean] = React.useState(false);
-
-    // const [activeBottom, setActiveBottom] = useSessionStorage('active-bottom-condition', {});
-    // const [currentActiveBottom, setCurrentActiveBottom] = React.useState(null);
-    // const [activeBottomBoolean,setActiveBottomBoolean] = React.useState(false);
-    // const [booleanTwTop,setBooleanTwTop] = React.useState(false);
-    // const [booleanTwBottom,setBooleanTwBottom] = React.useState(false);
-
-
-    // const [bottomArrow, setBottomArrow] = React.useState(true);
-    // const [even, setEven] = React.useState(1);
-    // Modal
     const [open, setOpen] = useState(false);
     const [clicked, setClicked] = useState(false);
     const [value, setValue] = useState(null);
@@ -59,7 +36,7 @@ const PlayComponent = () => {
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
     const [elements, setElements] = useState([]);
     const [rotate, setRotate] = useState(false);
-    const [glow,setGlow] = useState(false);
+    // const [glow,setGlow] = useState(false);
     const data = {
         normalImg: [...normalImg, value],
     }
@@ -74,10 +51,6 @@ const PlayComponent = () => {
         setNormalImg([]);
         setId(0);
         setNum(0);
-        // setIdTop(0);
-        // setIdBottom(0);
-        // setIdTwoWayTopRight(0);
-        // setIdTwoWayBottomRight(0);
         setReactFlowInstance(null);
         setElements([]);
         window.location.reload();
@@ -94,6 +67,25 @@ const PlayComponent = () => {
         e.preventDefault();
         save();
     }
+
+    // dimensions
+    const [dimensions, setDimensions] = React.useState({ 
+        height: window.innerHeight,
+        width: window.innerWidth
+      })
+    React.useEffect(() => {
+    function handleResize() {
+            setDimensions({
+            height: window.innerHeight,
+            width: window.innerWidth
+            })
+            return _ => {
+            window.removeEventListener('resize', handleResize)
+            
+            }
+    }
+    window.addEventListener('resize', handleResize);
+    }) 
 
     const onImage1Concat = (src,alt) => {      
         setNormalImg(i => i.concat({id: id, 
@@ -118,6 +110,7 @@ const PlayComponent = () => {
                     color: 'white', padding: '5px', 
                     borderRadius: '25px', cursor: 'pointer'}}>Continue</button>
                 </span>: null}
+                {dimensions.width>892 ? 
                 <Popup trigger={<img src={process.env.PUBLIC_URL + '/images/components/saveicon.png'} alt="i" style={{
                     position: 'fixed', top: '165px', right: '0', zIndex: '10000', cursor: 'pointer', pointerEvents: 'all'
                     }} 
@@ -146,26 +139,25 @@ const PlayComponent = () => {
                             </span>
                         </form>
                     )}
-                </Popup>
-            <ScrollLock>
-                <img src={leftImageSource} 
-                style={{height: '100vh', width: '22vw',}}
-                alt="left"/>
-            </ScrollLock>
+                </Popup> : null}
+            {dimensions.width > 892 ? 
+                <ScrollLock>
+                    <img src={leftImageSource} 
+                    style={{height: '100vh', width: '22vw',}}
+                    alt="left"/>
+                </ScrollLock> : null}
+
             {newImage[0].map((j,index) => {
                 if(!normalImg[index] || normalImg[index].alt !== j.alt){
                     if(normalImg[incr] !== newImage[incr - 100]){
                         return(<li
-                            style={{ position: 'absolute',
-                            left: '5vw', color: 'red',  fontWeight: '400', 
-                            fontSize: '1.2rem',top: '45vh', zIndex: '10'}}
+                            className="wrong-ele"
                         >Wrong Selected</li>)
                     }
                     if(incr === index){
                         return(
                             <>
-                            <li style={{position: 'absolute', top: '45vh', 
-                            left: '4vw', zIndex: '10'}}>Select {j.alt}</li>
+                            <li className="correct-ele">Select {j.alt}</li>
                             </>
                         )
                     }
@@ -174,12 +166,15 @@ const PlayComponent = () => {
                 return(<></>)
                 
             })}
-            <CoverDiv />
-            <DescSpan>
-                Description:
-            </DescSpan>
+            
+                <CoverDiv />
+                <DescSpan>
+                    Description:
+                </DescSpan> 
+           
+           
 
-            {count === 0 ? 
+            {dimensions.width > 892? count === 0 ? 
             <PosButton color={'grey'} back={'white'}
             onClick={() => {
                 setRotate(!rotate);
@@ -194,13 +189,16 @@ const PlayComponent = () => {
                 setCount(0);
             }}
             >Rotate Next Elements
-            </PosButton>}
+            </PosButton> : null}
 
             <BackIcon onClick={() => back()} />
 
             {/* Graph */}
-            <Scrollbars style={{ width: '78vw', height: '80vh', left: '22vw', position: 'absolute', top: '0',}}>
-                <Graph normalImg={normalImg.length} style={{zIndex: '-1'}}/>
+            {dimensions.width > 892 ? <>
+            <Scrollbars style={{ width: '78vw', height: '80vh', 
+            left: '22vw', position: 'absolute', top: '0',}}>
+                <Graph normalImg={normalImg.length} 
+                style={{zIndex: '-1'}}/>
                 <RetryIcon onClick={() => reset()} />
                 <LevelIcon />
                 <DnDFlow 
@@ -213,12 +211,34 @@ const PlayComponent = () => {
                 setElements={setElements}
                 rotate={rotate} press={press}
                 setPress={setPress}
-                normalImg={normalImg}
                 />
                 {/* {glowEffect()} */}
                 
             </Scrollbars>
             <BottomComponent onImage1Concat={onImage1Concat} />
+        </>:<>
+            <Scrollbars style={{ width: '85vw', height: '85vh', 
+            left: '0', position: 'absolute', top: '0',}}>
+                <Graph normalImg={normalImg.length} 
+                style={{zIndex: '-1'}}/>
+                <RetryIcon onClick={() => reset()} />
+                <LevelIcon />
+                <DnDFlow 
+                image={normalImg} ids={id}
+                setId={setId}
+                setImage={setNormalImg}
+                setReactFlowInstance={setReactFlowInstance}
+                elements={elements}
+                reactFlowInstance={reactFlowInstance}
+                setElements={setElements}
+                rotate={rotate} press={press}
+                setPress={setPress}
+                />
+                {/* {glowEffect()} */}
+                
+            </Scrollbars>
+            <BottomComponent onImage1Concat={onImage1Concat} />
+        </>}
         </div>
     );
 }

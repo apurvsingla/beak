@@ -1,7 +1,5 @@
 import React from 'react';
-import {BottomDesk,DivImg,BottomComponents} from '../Styles/PlayComponent.styles';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import {BottomDesk,DivImg,BottomComponents,FrontArrow,LastArrow} from '../Styles/PlayComponent.styles';
 import ReactSwipe from 'react-swipe';
 import {
 // piaono,
@@ -28,19 +26,12 @@ const BottomComponent = ({
     const onDragStart = (event, nodeType) => {
         event.dataTransfer.setData('application/reactflow', nodeType);
         event.dataTransfer.effectAllowed = 'move';
-      };
+      }; 
     return (
+        <>
         <BottomDesk>
                <>
-               <ArrowBackIosIcon 
-               style={{
-                   position: 'absolute',
-                   left: '1%',
-                   top: '40%',
-                cursor: 'pointer',
-                pointerEvents: 'all',
-                zIndex: '100'
-               }}
+               <FrontArrow 
                onClick={() =>{
                     reactSwipeEl.prev()
                 }}
@@ -53,16 +44,14 @@ const BottomComponent = ({
                     <BottomComponents className="bottom-component" onTouchEnd={() => {
                         }}>
                         <DivImg className="dndnode input" 
-                        style={{width: '72px', display: 'inline-block', height: '90px', marginRight: '50px'}}
                         onDragStart={(event) => {
                             onDragStart(event, 'input');
-                            onImage1Concat(powerSource, 'Power')
+                            onImage1Concat(powerSource, 'Power Led')
                         }} 
                         Image={powerSource}
                         draggable>
                         </DivImg>
                         <DivImg className="dndnode input" 
-                        style={{width: '130px', display: 'inline-block',marginRight: '50px'}}
                         onDragStart={(event) => {
                             onDragStart(event,'input');
                             onImage1Concat(timerSource, 'Timer')
@@ -71,7 +60,6 @@ const BottomComponent = ({
                         draggable>
                         </DivImg>
                         <DivImg className="dndnode input" 
-                        style={{width: '150px', display: 'inline-block',marginRight: '50px'}}
                         onDragStart={(event) => {
                             onDragStart(event,'input');
                             onImage1Concat(beeperSource, 'Beeper')
@@ -80,7 +68,6 @@ const BottomComponent = ({
                         draggable>
                         </DivImg>
                         <DivImg className="dndnode input" 
-                        style={{width: '80px', display: 'inline-block',marginRight: '50px'}}
                         onDragStart={(event) => {
                             onDragStart(event,'input');
                             onImage1Concat(conditionSource, 'Splitter')
@@ -93,17 +80,7 @@ const BottomComponent = ({
                     <BottomComponents className="bottom-component"
                      onTouchEnd={() => {
                         }}>
-                        {/* <DivImg className="dndnode input" 
-                        style={{width: '15%', display: 'inline-block', height: '105px', marginRight: '50px',}}
-                        onDragStart={(event) => {
-                            onDragStart(event,'input');
-                            onImage1Concat(piaono, 'Piano')
-                        }} 
-                        Image={piaono}
-                        draggable>
-                        </DivImg> */}
                         <DivImg className="dndnode input" 
-                        style={{width: '15%', display: 'inline-block',marginRight: '50px',height: '105px'}}
                         onDragStart={(event) => {
                             onDragStart(event,'input');
                             onImage1Concat(dualSwitch, 'DualSwitch')
@@ -112,7 +89,6 @@ const BottomComponent = ({
                         draggable>
                         </DivImg>
                         <DivImg className="dndnode input" 
-                        style={{width: '15%', display: 'inline-block',marginRight: '50px',height: '105px'}}
                         onDragStart={(event) => {
                             onDragStart(event,'input');
                             onImage1Concat(tactSource, 'Tact')
@@ -120,22 +96,12 @@ const BottomComponent = ({
                         Image={tactSource}
                         draggable>
                         </DivImg>
-                        {/* <DivImg className="dndnode input" 
-                        style={{width: '15%', display: 'inline-block',marginRight: '50px',height: '105px'}}
-                        onDragStart={(event) => {
-                            onDragStart(event,'input');
-                            onImage1Concat(ledSource, 'LED')
-                        }} 
-                        Image={ledSource}
-                        draggable>
-                        </DivImg> */}
                     </BottomComponents>
 
                     <BottomComponents className="bottom-component"
                      onTouchEnd={() => {
                         }}>
                         <DivImg className="dndnode input" 
-                        style={{width: '15%', display: 'inline-block',marginRight: '50px'}}
                         onDragStart={(event) => {
                             onDragStart(event,'input');
                             onImage1Concat(usbSource, 'USB')
@@ -144,7 +110,6 @@ const BottomComponent = ({
                         draggable>
                         </DivImg>
                         <DivImg className="dndnode input" 
-                        style={{width: '15%', display: 'inline-block',marginRight: '50px'}}
                         onDragStart={(event) => {
                             onDragStart(event,'input');
                             onImage1Concat(resistorSource, 'Resistor')
@@ -153,16 +118,14 @@ const BottomComponent = ({
                         draggable>
                         </DivImg>
                         <DivImg className="dndnode input" 
-                        style={{width: '15%', display: 'inline-block',marginRight: '50px'}}
                         onDragStart={(event) => {
                             onDragStart(event,'input');
-                            onImage1Concat(ledGlowSource, 'LEDGLOW')
+                            onImage1Concat(ledGlowSource, 'LED')
                         }} 
                         Image={ledGlowSource}
                         draggable>
                         </DivImg>
                         <DivImg className="dndnode input" 
-                        style={{width: '15%', display: 'inline-block',marginRight: '50px'}}
                         onDragStart={(event) => {
                             onDragStart(event,'input');
                             onImage1Concat(transistorSource, 'Transistor')
@@ -176,7 +139,6 @@ const BottomComponent = ({
                      onTouchEnd={() => {
                         }}>
                         <DivImg className="dndnode input" 
-                        style={{width: '15%', display: 'inline-block', height: '105px', marginRight: '50px',}}
                         onDragStart={(event) => {
                             onDragStart(event,'input');
                             onImage1Concat(ldrSource, 'LDR')
@@ -185,7 +147,6 @@ const BottomComponent = ({
                         draggable>
                         </DivImg>
                         <DivImg className="dndnode input" 
-                        style={{width: '15%', display: 'inline-block',marginRight: '50px',height: '105px'}}
                         onDragStart={(event) => {
                             onDragStart(event,'input');
                             onImage1Concat(diodeSource, 'Diode')
@@ -194,7 +155,6 @@ const BottomComponent = ({
                         draggable>
                         </DivImg>
                         <DivImg className="dndnode input" 
-                        style={{width: '15%', display: 'inline-block',marginRight: '50px',height: '105px'}}
                         onDragStart={(event) => {
                             onDragStart(event,'input');
                             onImage1Concat(capacitorSource, 'Capacitor')
@@ -203,7 +163,6 @@ const BottomComponent = ({
                         draggable>
                         </DivImg>
                         <DivImg className="dndnode input" 
-                        style={{width: '15%', display: 'inline-block',marginRight: '50px',height: '105px'}}
                         onDragStart={(event) => {
                             onDragStart(event,'input');
                             onImage1Concat(potSource, 'POTENTIOMETER')
@@ -215,18 +174,13 @@ const BottomComponent = ({
                     </ReactSwipe>
             </>
             {/* Swipeable Dots End */}
-            <ArrowForwardIosIcon 
-            style={{
-                position: 'absolute',
-                right: '0',
-                top: '40%',
-                cursor: 'pointer'
-            }}
+            <LastArrow 
             onClick={(e) => {
                 reactSwipeEl.next()
             }}
             />
            </BottomDesk>
+           </>
     );
 }
 

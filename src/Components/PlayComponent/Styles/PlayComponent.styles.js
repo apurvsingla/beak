@@ -66,7 +66,6 @@ export const BottomDesk = styled.div`
     background-color: white;
     height: 100%;
     display: flex;
-    flex-direction: column;
     position: fixed;
     bottom: 0;
     right: -10px;
@@ -89,7 +88,7 @@ export const Img = styled.img`
     }  
 `;
 
-export const DivImg = styled.div`
+export const DivImg = styled.span`
     background-image: url(${props => props.Image});
     height: 110px;
     width: 122px;
@@ -103,6 +102,7 @@ export const DivImg = styled.div`
         width: 100px;
         margin: 10px;
         display: flex;
+        flex-direction: column;
     }
 `;
 

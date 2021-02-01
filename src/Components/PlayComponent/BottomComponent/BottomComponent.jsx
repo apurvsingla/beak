@@ -69,6 +69,14 @@ const BottomComponent = ({
                             onDragStart(event, 'input');
                             onImage1Concat(powerSource, 'Power Led')
                         }} 
+                        onTouchStart={(event) => {
+                            onDragStart(event, 'input');
+                            onImage1Concat(powerSource, 'Power Led')
+                        }} 
+                        onTouchMove={(event) => {
+                            onDragStart(event, 'input');
+                            onImage1Concat(powerSource, 'Power Led')
+                        }} 
                         Image={powerSource}
                         draggable>
                         </DivImg>
@@ -206,13 +214,12 @@ const BottomComponent = ({
            <>
            <FrontArrow  />
                 <Scrollbars style={{height: '100vh', width: '20vw'}}>
-                <BottomComponents className="bottom-component" onTouchEnd={() => {
-                    }}>
+                <BottomComponents className="bottom-component">
                     <DivImg className="dndnode input" 
                     onDragStart={(event) => {
-                        onDragStart(event, 'input');
+                        onDragStart(event,'input');
                         onImage1Concat(powerSource, 'Power Led')
-                    }} 
+                    }}
                     Image={powerSource}
                     draggable>
                     </DivImg>
@@ -242,9 +249,7 @@ const BottomComponent = ({
                     </DivImg>
                     
                 </BottomComponents>
-                <BottomComponents className="bottom-component"
-                 onTouchEnd={() => {
-                    }}>
+                <BottomComponents className="bottom-component">
                     <DivImg className="dndnode input" 
                     onDragStart={(event) => {
                         onDragStart(event,'input');
@@ -262,10 +267,9 @@ const BottomComponent = ({
                     draggable>
                     </DivImg>
                 </BottomComponents>
+-+
 
-                <BottomComponents className="bottom-component"
-                 onTouchEnd={() => {
-                    }}>
+                <BottomComponents className="bottom-component">
                     <DivImg className="dndnode input" 
                     onDragStart={(event) => {
                         onDragStart(event,'input');
@@ -300,9 +304,7 @@ const BottomComponent = ({
                     </DivImg>
                 </BottomComponents>
 
-                <BottomComponents className="bottom-component"
-                 onTouchEnd={() => {
-                    }}>
+                <BottomComponents className="bottom-component">
                     <DivImg className="dndnode input" 
                     onDragStart={(event) => {
                         onDragStart(event,'input');

@@ -98,6 +98,7 @@ const BottomMobileComponent = () => {
                     <PopulatedImage left={150} top={10 + i*20} 
                     id="ele"
                     onDrag={(e) => bind.onDrag(e)}>
+                        <span id="liness"/>
                     </PopulatedImage>
                     </Draggable>
                 </DropTarget>
@@ -124,6 +125,7 @@ const BottomMobileComponent = () => {
                     <PopulatedImage left={200} top={10 + i*20} 
                     id="ele"
                     onDrag={(e) => bind.onDrag(e)}>
+                        <span id="liness"/>
                     </PopulatedImage>
                     </Draggable>
                 </DropTarget>
@@ -150,6 +152,7 @@ const BottomMobileComponent = () => {
                     <PopulatedImage left={250} top={10 + i*20} 
                     id="ele"
                     onDrag={(e) => bind.onDrag(e)}>
+                        <span id="liness"/>
                     </PopulatedImage>
                     </Draggable>
                 </DropTarget>
@@ -177,6 +180,7 @@ const BottomMobileComponent = () => {
                     <PopulatedImage left={300} top={10 + i*20} 
                     id="ele"
                     onDrag={(e) => bind.onDrag(e)}>
+                        <span id="liness"/>
                     </PopulatedImage>
                     </Draggable>
                 </DropTarget>
@@ -204,6 +208,7 @@ const BottomMobileComponent = () => {
                     <PopulatedImage left={400} top={10 + i*20} 
                     id="ele"
                     onDrag={(e) => bind.onDrag(e)}>
+                        <span id="liness"/>
                     </PopulatedImage>
                     </Draggable>
                 </DropTarget>

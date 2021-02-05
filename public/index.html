@@ -41,22 +41,22 @@
     -->
     <script>
     function can(){
-      let newVar = document.querySelector('#outer');
-      let ele = document.querySelector('#ele');
-      newVar.addEventListener('touchstart', () => {
-        var span = document.createElement("SPAN");
-        var att = document.createAttribute('class');
-        att.value = 'lines';
-        span.setAttributeNode(att);
-        ele.appendChild(span);
-        console.log('running')
-      })
-      if(newVar){
-        var span = document.getElementById("liness");
-        var att = document.createAttribute('class');
-        att.value = 'lines';
-        span.setAttributeNode(att);
-      }
+        let newVar = document.querySelector('#outer');
+        let ele = document.querySelector('#ele');
+        newVar.addEventListener('touchstart', () => {
+          var span = document.createElement("SPAN");
+          var att = document.createAttribute('class');
+          att.value = 'lines';
+          span.setAttributeNode(att);
+          ele.appendChild(span);
+          console.log('running')
+        })
+        if(newVar){
+          var span = document.getElementById("liness");
+          var att = document.createAttribute('class');
+          att.value = 'lines';
+          span.setAttributeNode(att);
+        }
       }
     </script>
   </body>

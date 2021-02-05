@@ -8,15 +8,15 @@
     // opacity: 1;
 }
 #outer{
-    @include position(200)
+    @include position(200);
 }
 
 #outer2{
-    @include position(240)
+    @include position(240);
 }
 
 #outer3{
-    @include position(280)
+    @include position(280);
 }
 
 .className{
@@ -26,4 +26,5 @@
     border-radius: 25px; 
     position: absolute; 
     top: 30px;
+    z-index: 10000;
 }

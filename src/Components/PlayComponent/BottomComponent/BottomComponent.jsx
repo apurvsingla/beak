@@ -19,6 +19,7 @@ usbSource,
 transistorSource,
 ledGlowSource
 } from '../../Source/Source';
+// import {Draggable, DropZone} from 'react-drag-or-touch-drop'
 import './Bottom.style.scss'
 import Scrollbars from 'react-custom-scrollbars';
 const BottomComponent = ({
@@ -43,8 +44,16 @@ const BottomComponent = ({
     window.addEventListener('resize', handleResize);
     })
     const onDragStart = (event, nodeType) => {
+        console.log(event.dataTransfer)
         event.dataTransfer.setData('application/reactflow', nodeType);
         event.dataTransfer.effectAllowed = 'move';
+      }; 
+
+    const onTouchMove = (event, nodeType) => {
+        // console.log(event.dataTransfer);
+        // event.dataTransfer.setData('application/reactflow', nodeType);
+        // event.dataTransfer.setData('application/reactflow', nodeType);
+        // event.dataTransfer.effectAllowed = 'move';
       }; 
     return (
         <>
@@ -70,11 +79,7 @@ const BottomComponent = ({
                             onImage1Concat(powerSource, 'Power Led')
                         }} 
                         onTouchStart={(event) => {
-                            onDragStart(event, 'input');
-                            onImage1Concat(powerSource, 'Power Led')
-                        }} 
-                        onTouchMove={(event) => {
-                            onDragStart(event, 'input');
+                            onTouchMove(event, 'input');
                             onImage1Concat(powerSource, 'Power Led')
                         }} 
                         Image={powerSource}
@@ -212,12 +217,15 @@ const BottomComponent = ({
            </BottomDesk>
            : <BottomDesk>
            <>
-           <FrontArrow  />
                 <Scrollbars style={{height: '100vh', width: '20vw'}}>
                 <BottomComponents className="bottom-component">
                     <DivImg className="dndnode input" 
-                    onDragStart={(event) => {
-                        onDragStart(event,'input');
+                    onTouchEnd={(event) => {
+                        onTouchMove(event,'input');
+                        onImage1Concat(powerSource, 'Power Led')
+                    }}
+                    onTouchMove={(event) => {
+                        onTouchMove(event,'input');
                         onImage1Concat(powerSource, 'Power Led')
                     }}
                     Image={powerSource}
@@ -340,12 +348,6 @@ const BottomComponent = ({
                 </BottomComponents>
                 </Scrollbars>
         </>
-        {/* Swipeable Dots End */}
-        <LastArrow 
-        onClick={(e) => {
-            reactSwipeEl.next()
-        }}
-        />
        </BottomDesk>}
            </>
     );

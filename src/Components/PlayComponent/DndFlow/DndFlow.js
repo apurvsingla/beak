@@ -88,6 +88,10 @@ const DnDFlow = ({image,setImage,ids,setId,
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
   };
+  // const onTouchEnd = (event) => {
+  //   event.preventDefault();
+  //   event.dataTransfer.dropEffect = 'move';
+  // } 
   const onClickEvent=(e) => {
     const newArray = [...image];
     newArray.forEach((i,index) => {
@@ -449,9 +453,11 @@ const DnDFlow = ({image,setImage,ids,setId,
           onElementsRemove={onElementsRemove}
           onLoad={onLoad}
           onDrop={onDrop}
+          // onTouchEnd={onDrop}
           onDragOver={onDragOver}
           onEdgeUpdate={onUpdateEdge}
           multiSelectionKeyCode="Control"
+          // onTouchEnd={onTouchEnd}
           // onClick={onElementsRemove}
           key="edges"
           >

@@ -97,6 +97,7 @@ export const DivImg = styled.span`
     background-repeat: no-repeat;
     background-size: contain;
     display: inline-block;
+    z-index: 10000;
     @media (max-width: 892px){
         height: 60px;
         width: 100px;
@@ -171,11 +172,12 @@ export const CoverDiv = styled.div`
     }
 
     @media (max-width: 892px){
-        width: 77.8vw;
+        width: 85vw;
         height: 15vh;
         background-color: white;
         position: fixed;
         bottom: 0;
+        border-right: 1px solid lightgrey;
     }    
 `;
 
@@ -198,4 +200,19 @@ export const LastArrow = styled(ArrowForwardIosIcon)`
     @media (max-width: 892px){
        display: none !important;
     } 
+`;
+
+const Image = css`
+    position: absolute; 
+    z-index: 100; 
+    object-fit: contain; 
+    width: 70px; 
+    height: 50px;
+`;
+
+
+export const PopulatedImage = styled.span`
+    ${Image}
+    left:  ${props => props.left}px;
+    top:  ${props => props.top}px;
 `;

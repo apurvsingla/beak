@@ -1,0 +1,20 @@
+@mixin position($left){
+    z-index: 1000;
+    object-fit: contain;
+    // position: absolute;
+    height: 70px;
+    width: 120px;
+    // left: $left;
+    // opacity: 1;
+}
+#outer{
+    @include position(200)
+}
+
+#outer2{
+    @include position(240)
+}
+
+#outer3{
+    @include position(280)
+}

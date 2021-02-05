@@ -19,6 +19,8 @@ import {useHistory} from 'react-router-dom';
 import BottomComponent from './BottomComponent/BottomComponent';
 import axios from "axios";
 import DnDFlow from './DndFlow/DndFlow';
+import MobileDesign from './MobileDesign/MobileDesign';
+import BottomMobileComponent from './MobileDesign/BottomMobileComponent/BottomMobileComponent';
 
 const PlayComponent = () => {
     const history = useHistory();
@@ -217,27 +219,17 @@ const PlayComponent = () => {
             </Scrollbars>
             <BottomComponent onImage1Concat={onImage1Concat} />
         </>:<>
-            <Scrollbars style={{ width: '85vw', height: '85vh', 
-            left: '0', position: 'absolute', top: '0',}}>
+            {/* <Scrollbars style={{ width: '85vw', height: '85vh', 
+            left: '0', position: 'absolute', top: '0',}}> */}
                 <Graph normalImg={normalImg.length} 
                 style={{zIndex: '-1'}}/>
                 <RetryIcon onClick={() => reset()} />
                 <LevelIcon />
-                <DnDFlow 
-                image={normalImg} ids={id}
-                setId={setId}
-                setImage={setNormalImg}
-                setReactFlowInstance={setReactFlowInstance}
-                elements={elements}
-                reactFlowInstance={reactFlowInstance}
-                setElements={setElements}
-                rotate={rotate} press={press}
-                setPress={setPress}
-                />
-                {/* {glowEffect()} */}
                 
-            </Scrollbars>
-            <BottomComponent onImage1Concat={onImage1Concat} />
+                {/* {glowEffect()} */}
+                <MobileDesign />
+            {/* </Scrollbars> */}
+            <BottomMobileComponent onImage1Concat={onImage1Concat} />
         </>}
         </div>
     );

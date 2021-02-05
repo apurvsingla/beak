@@ -43,7 +43,7 @@
     function can(){
       let newVar = document.querySelector('#outer');
       let ele = document.querySelector('#ele');
-      newVar.addEventListener('click', () => {
+      newVar.addEventListener('touchstart', () => {
         var span = document.createElement("SPAN");
         var att = document.createAttribute('class');
         att.value = 'lines';

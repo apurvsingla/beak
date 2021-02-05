@@ -14,26 +14,37 @@ import Scrollbars from 'react-custom-scrollbars';
 import Draggable from 'react-draggable';
 import './bottom.scss';
 import {PopulatedImage} from '../../Styles/PlayComponent.styles';
+import { useGesture } from 'react-use-gesture';
 
 const BottomMobileComponent = () => {
     let num = [1,2,3,4,5,6,7,8,9,10];
+    // const [line,setLine] = React.useState(null);
+    const bind = useGesture({
+        onDrag: line => console.log('y')
+    })
     return (
         <>
         {/* left panel */}
         {num.map(i => {
             return(
-            <DragDropContainer style={{position: 'absolute', left: '0'}}> 
+            <DragDropContainer style={{position: 'absolute', left: '0'}} key={i + 'container-row'}> 
                 <DropTarget 
                 targetKey="foo" 
                 onHit={(e) => {
+                    console.log(e.target)
                     e.target.innerHTML = `
                     <img src=${e.dragData} id="outer" alt="props"/>
+                    <span 
+                    class="className"
+                    />
                     `;
                 }}
                 >
                     <Draggable>
                         <Scrollbars>
-                    <PopulatedImage left={50 + i*20} />
+                    <PopulatedImage left={50 + i*30} top={0} onDrag={() => bind()}> 
+                       
+                    </PopulatedImage>
                     </Scrollbars>
                     </Draggable>
                 </DropTarget>
@@ -41,174 +52,139 @@ const BottomMobileComponent = () => {
         })}
         {num.map(i => {
             return(
-            <DragDropContainer style={{position: 'absolute', left: '0'}}> 
+            <DragDropContainer style={{position: 'absolute', left: '0'}} key={i + 'container-col1'}> 
                 <DropTarget 
                 targetKey="foo" 
                 onHit={(e) => {
+                    console.log(e.target)
                     e.target.innerHTML = `
                     <img src=${e.dragData} id="outer" alt="props"/>
+                    <span 
+                    class="className"
+                    />
                     `;
                 }}
                 >
                     <Draggable>
-                    <PopulatedImage left={50} top={10 + i*20}/>
+                    <PopulatedImage left={50} top={10 + i*20} onDrag={() => bind()}>
+                    </PopulatedImage>
                     </Draggable>
                 </DropTarget>
             </DragDropContainer>)
         })}
         {num.map(i => {
             return(
-            <DragDropContainer style={{position: 'absolute', left: '0'}}> 
+            <DragDropContainer style={{position: 'absolute', left: '0'}}  key={i + 'container-col-2'}> 
                 <DropTarget 
                 targetKey="foo" 
                 onHit={(e) => {
+                    console.log(e.target)
                     e.target.innerHTML = `
                     <img src=${e.dragData} id="outer" alt="props"/>
+                    <span 
+                    class="className"
+                    />
                     `;
                 }}
                 >
                     <Draggable>
-                    <PopulatedImage left={100} top={10 + i*20}/>
+                    <PopulatedImage left={150} top={10 + i*20} onDrag={() => bind()}>
+                    </PopulatedImage>
                     </Draggable>
                 </DropTarget>
             </DragDropContainer>)
         })}
         {num.map(i => {
             return(
-            <DragDropContainer style={{position: 'absolute', left: '0'}}> 
+            <DragDropContainer style={{position: 'absolute', left: '0'}}  key={i + 'container-row-3'}> 
                 <DropTarget 
                 targetKey="foo" 
                 onHit={(e) => {
+                    console.log(e.target)
                     e.target.innerHTML = `
                     <img src=${e.dragData} id="outer" alt="props"/>
+                    <span 
+                    class="className"
+                    />
                     `;
                 }}
                 >
                     <Draggable>
-                    <PopulatedImage left={140} top={10 + i*20}/>
+                    <PopulatedImage left={200} top={10 + i*20} onDrag={() => bind()}>
+                    </PopulatedImage>
                     </Draggable>
                 </DropTarget>
             </DragDropContainer>)
         })}
         {num.map(i => {
             return(
-            <DragDropContainer style={{position: 'absolute', left: '0'}}> 
+            <DragDropContainer style={{position: 'absolute', left: '0'}}  key={i + 'container-row-4'}> 
                 <DropTarget 
                 targetKey="foo" 
                 onHit={(e) => {
+                    console.log(e.target)
                     e.target.innerHTML = `
                     <img src=${e.dragData} id="outer" alt="props"/>
+                    <span 
+                    class="className"
+                    />
                     `;
                 }}
                 >
                     <Draggable>
-                    <PopulatedImage left={180} top={10 + i*20}/>
+                    <PopulatedImage left={250} top={10 + i*20} onDrag={() => bind()}>
+                    </PopulatedImage>
                     </Draggable>
                 </DropTarget>
             </DragDropContainer>)
         })}
+       
         {num.map(i => {
             return(
-            <DragDropContainer style={{position: 'absolute', left: '0'}}> 
+            <DragDropContainer style={{position: 'absolute', left: '0'}}  key={i + 'container-row-5'}> 
                 <DropTarget 
                 targetKey="foo" 
                 onHit={(e) => {
+                    console.log(e.target)
                     e.target.innerHTML = `
                     <img src=${e.dragData} id="outer" alt="props"/>
+                    <span 
+                    class="className"
+                    />
                     `;
                 }}
                 >
                     <Draggable>
-                    <PopulatedImage left={220} top={10 + i*20}/>
+                    <PopulatedImage left={300} top={10 + i*20} onDrag={() => bind()}>
+                    </PopulatedImage>
                     </Draggable>
                 </DropTarget>
             </DragDropContainer>)
         })}
+       
         {num.map(i => {
             return(
-            <DragDropContainer style={{position: 'absolute', left: '0'}}> 
+            <DragDropContainer style={{position: 'absolute', left: '0'}}  key={i + 'container-row-6'}> 
                 <DropTarget 
                 targetKey="foo" 
                 onHit={(e) => {
+                    console.log(e.target)
                     e.target.innerHTML = `
                     <img src=${e.dragData} id="outer" alt="props"/>
+                    <span 
+                    class="className"
+                    />
                     `;
                 }}
                 >
                     <Draggable>
-                    <PopulatedImage left={260} top={10 + i*20}/>
+                    <PopulatedImage left={400} top={10 + i*20} onDrag={() => bind()}>
+                    </PopulatedImage>
                     </Draggable>
                 </DropTarget>
             </DragDropContainer>)
         })}
-        {num.map(i => {
-            return(
-            <DragDropContainer style={{position: 'absolute', left: '0'}}> 
-                <DropTarget 
-                targetKey="foo" 
-                onHit={(e) => {
-                    e.target.innerHTML = `
-                    <img src=${e.dragData} id="outer" alt="props"/>
-                    `;
-                }}
-                >
-                    <Draggable>
-                    <PopulatedImage left={300} top={10 + i*20}/>
-                    </Draggable>
-                </DropTarget>
-            </DragDropContainer>)
-        })}
-        {num.map(i => {
-            return(
-            <DragDropContainer style={{position: 'absolute', left: '0'}}> 
-                <DropTarget 
-                targetKey="foo" 
-                onHit={(e) => {
-                    e.target.innerHTML = `
-                    <img src=${e.dragData} id="outer" alt="props"/>
-                    `;
-                }}
-                >
-                    <Draggable>
-                    <PopulatedImage left={340} top={10 + i*20}/>
-                    </Draggable>
-                </DropTarget>
-            </DragDropContainer>)
-        })}
-        {num.map(i => {
-            return(
-            <DragDropContainer style={{position: 'absolute', left: '0'}}> 
-                <DropTarget 
-                targetKey="foo" 
-                onHit={(e) => {
-                    e.target.innerHTML = `
-                    <img src=${e.dragData} id="outer" alt="props"/>
-                    `;
-                }}
-                >
-                    <Draggable>
-                    <PopulatedImage left={380} top={10 + i*20}/>
-                    </Draggable>
-                </DropTarget>
-            </DragDropContainer>)
-        })}
-        {num.map(i => {
-            return(
-            <DragDropContainer style={{position: 'absolute', left: '0'}}> 
-                <DropTarget 
-                targetKey="foo" 
-                onHit={(e) => {
-                    e.target.innerHTML = `
-                    <img src=${e.dragData} id="outer" alt="props"/>
-                    `;
-                }}
-                >
-                    <Draggable>
-                    <PopulatedImage left={420} top={10 + i*20}/>
-                    </Draggable>
-                </DropTarget>
-            </DragDropContainer>)
-        })}
+        
 
         {/* right panel */}
         <div style={{display: 'flex', flexDirection: 'column', 

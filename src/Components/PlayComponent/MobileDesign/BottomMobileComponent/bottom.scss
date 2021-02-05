@@ -18,3 +18,12 @@
 #outer3{
     @include position(280)
 }
+
+.className{
+    width: 10px; 
+    height: 10px; 
+    background-color: black; 
+    border-radius: 25px; 
+    position: absolute; 
+    top: 30px;
+}

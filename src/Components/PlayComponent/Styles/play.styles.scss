@@ -112,8 +112,9 @@
 }
 
 .lines{
-  width: 5px;
-  height: 25px;
-  background-color: green;
-  position: absolute;
+  width: 5px !important;
+  height: 25px !important;
+  background-color: green !important;
+  position: absolute !important;
+  left: 150px !important;
 }

@@ -25,65 +25,37 @@ const BottomMobileComponent = () => {
     return (
         <>
         {/* left panel */}
-        {/* {num.map(i => {
-            return(
-            <DragDropContainer style={{position: 'absolute', left: '0'}} key={i + 'container-row'}> 
-                <DropTarget 
-                targetKey="foo" 
-                onHit={(e) => {
-                    console.log(e.target)
-                    e.target.innerHTML = `
-                    <img src=${e.dragData} id="outer" alt="props"/>
-                    <span 
-                    class="className"
-                    />
-                    `;
-                }}
-                >
-                    <Draggable>
-                        <Scrollbars>
-                    <PopulatedImage left={50 + i*30} top={0} onDrag={() => bind()}> 
-                       
-                    </PopulatedImage>
-                    </Scrollbars>
-                    </Draggable>
-                </DropTarget>
-            </DragDropContainer>)
-        })} */}
         {num.map(i => {
             return(
             <DragDropContainer style={{position: 'absolute', left: '0'}} key={i + 'container-col1'}> 
                 <DropTarget 
                 targetKey="foo" 
                 onHit={(e) => {
-                    console.log(e.target)
                     e.target.innerHTML = `
                     <img src=${e.dragData} id="outer" alt="props"/>
                     <span 
                     class="className"
                     onclick="can()"
                     ontouchstart="can()"
-                    />
-                    `;
+                    />`;
                 }}
                 >
                     <Draggable>
-                    <PopulatedImage left={50} top={10 + i*20} 
-                    id="ele"
-                    onDrag={(e) => bind.onDrag(e)}>
-                        <span id="liness"/>
-                    </PopulatedImage>
+                        <PopulatedImage left={50} top={10 + i*20} 
+                        id="ele"
+                        onDrag={(e) => bind.onDrag(e)}>
+                            <span id="liness"/>
+                        </PopulatedImage>
                     </Draggable>
                 </DropTarget>
             </DragDropContainer>)
         })}
-        {num.map(i => {
+        {/* {num.map(i => {
             return(
             <DragDropContainer style={{position: 'absolute', left: '0'}}  key={i + 'container-col-2'}> 
                 <DropTarget 
                 targetKey="foo" 
                 onHit={(e) => {
-                    console.log(e.target)
                     e.target.innerHTML = `
                     <img src=${e.dragData} id="outer" alt="props"/>
                     <span 
@@ -110,7 +82,6 @@ const BottomMobileComponent = () => {
                 <DropTarget 
                 targetKey="foo" 
                 onHit={(e) => {
-                    console.log(e.target)
                     e.target.innerHTML = `
                     <img src=${e.dragData} id="outer" alt="props"/>
                     <span 
@@ -137,7 +108,6 @@ const BottomMobileComponent = () => {
                 <DropTarget 
                 targetKey="foo" 
                 onHit={(e) => {
-                    console.log(e.target)
                     e.target.innerHTML = `
                     <img src=${e.dragData} id="outer" alt="props"/>
                     <span 
@@ -165,7 +135,6 @@ const BottomMobileComponent = () => {
                 <DropTarget 
                 targetKey="foo" 
                 onHit={(e) => {
-                    console.log(e.target)
                     e.target.innerHTML = `
                     <img src=${e.dragData} id="outer" alt="props"/>
                     <span 
@@ -193,7 +162,6 @@ const BottomMobileComponent = () => {
                 <DropTarget 
                 targetKey="foo" 
                 onHit={(e) => {
-                    console.log(e.target)
                     e.target.innerHTML = `
                     <img src=${e.dragData} id="outer" alt="props"/>
                     <span 
@@ -214,7 +182,7 @@ const BottomMobileComponent = () => {
                 </DropTarget>
             </DragDropContainer>)
         })}
-        
+         */}
 
         {/* right panel */}
         <div style={{display: 'flex', flexDirection: 'column', 

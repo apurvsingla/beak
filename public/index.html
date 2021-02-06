@@ -43,7 +43,8 @@
     function can(){
         let newVar = document.querySelector('#outer');
         let ele = document.querySelector('#ele');
-        newVar.addEventListener('touchmove', () => {
+        let className = document.querySelector('.className');
+        className.addEventListener('touchmove', () => {
           var span = document.createElement("SPAN");
           var att = document.createAttribute('class');
           att.value = 'lines';
@@ -51,7 +52,7 @@
           ele.appendChild(span);
           console.log('running')
         })
-        if(newVar){
+        if(className){
           var span = document.getElementById("liness");
           var att = document.createAttribute('class');
           att.value = 'lines';

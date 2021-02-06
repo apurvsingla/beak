@@ -50,7 +50,7 @@ const BottomMobileComponent = () => {
                 </DropTarget>
             </DragDropContainer>)
         })}
-        {/* {num.map(i => {
+        {num.map(i => {
             return(
             <DragDropContainer style={{position: 'absolute', left: '0'}}  key={i + 'container-col-2'}> 
                 <DropTarget 
@@ -182,7 +182,34 @@ const BottomMobileComponent = () => {
                 </DropTarget>
             </DragDropContainer>)
         })}
-         */}
+
+{num.map(i => {
+            return(
+            <DragDropContainer style={{position: 'absolute', left: '0'}}  key={i + 'container-row-6'}> 
+                <DropTarget 
+                targetKey="foo" 
+                onHit={(e) => {
+                    e.target.innerHTML = `
+                    <img src=${e.dragData} id="outer" alt="props"/>
+                    <span 
+                    class="className"
+                    ontouchstart="script.js"
+                    ontouchstart="can()"
+                    />
+                    `;
+                }}
+                >
+                    <Draggable>
+                    <PopulatedImage left={480} top={10 + i*20} 
+                    id="ele"
+                    onDrag={(e) => bind.onDrag(e)}>
+                        <span id="liness"/>
+                    </PopulatedImage>
+                    </Draggable>
+                </DropTarget>
+            </DragDropContainer>)
+        })}
+        
 
         {/* right panel */}
         <div style={{display: 'flex', flexDirection: 'column', 

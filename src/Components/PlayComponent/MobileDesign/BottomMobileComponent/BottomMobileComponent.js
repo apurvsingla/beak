@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 // import { TouchBackend } from 'react-dnd-touch-backend'
-// import { DndProvider } from 'react-dnd'
+// import { DndProvider } from 'react-dnd';
 import {
 // beeperSource,
 capacitorSource,
@@ -14,27 +15,34 @@ import Scrollbars from 'react-custom-scrollbars';
 import Draggable from 'react-draggable';
 import './bottom.scss';
 import {PopulatedImage} from '../../Styles/PlayComponent.styles';
-import { useGesture } from 'react-use-gesture';
+// import LineTo from 'react-lineto';
 
 const BottomMobileComponent = () => {
     let num = [1,2,3,4,5,6,7,8,9,10];
-    // const [line,setLine] = React.useState(null);
-    const bind = useGesture({
-        onDrag: line => console.log('y')
-    })
+    
+    // const connection = () => {
+    //     let id = document.getElementById(`${'className' + 1}`);
+    //     let secondId = document.getElementById('className9');
+    //     if(id && secondId){
+    //         return(<LineTo from={'className1'} to={'className9'} style={{position: 'absolute', zIndex: '100000000000'}}/>)0.....
+    //     }
+    //     console.log(id)
+    // }
     return (
         <>
+        {/* {connection()} */}
         {/* left panel */}
         {num.map(i => {
             return(
-            <DragDropContainer style={{position: 'absolute', left: '0'}} key={i + 'container-col1'}> 
-                <DropTarget 
-                targetKey="foo" 
+            <DragDropContainer style={{position: 'absolute', left: '0'}} key={i + 'container-col1'}>
+                <DropTarget
+                targetKey="foo"
                 onHit={(e) => {
                     e.target.innerHTML = `
                     <img src=${e.dragData} id="outer" alt="props"/>
-                    <span 
+                    <span
                     class="className"
+                    id=${'className' + i}
                     onclick="can()"
                     ontouchstart="can()"
                     />`;
@@ -42,8 +50,7 @@ const BottomMobileComponent = () => {
                 >
                     <Draggable>
                         <PopulatedImage left={50} top={10 + i*20} 
-                        id="ele"
-                        onDrag={(e) => bind.onDrag(e)}>
+                        id="ele">
                             <span id="liness"/>
                         </PopulatedImage>
                     </Draggable>
@@ -52,24 +59,24 @@ const BottomMobileComponent = () => {
         })}
         {num.map(i => {
             return(
-            <DragDropContainer style={{position: 'absolute', left: '0'}}  key={i + 'container-col-2'}> 
-                <DropTarget 
-                targetKey="foo" 
+            <DragDropContainer style={{position: 'absolute', left: '0'}}  key={i + 'container-col-2'}>
+                <DropTarget
+                targetKey="foo"
                 onHit={(e) => {
                     e.target.innerHTML = `
                     <img src=${e.dragData} id="outer" alt="props"/>
-                    <span 
+                    <span
                     class="className"
                     onclick="can()"
+                    id=${'className1' + i}
                     ontouchstart="can()"
                     />
                     `;
                 }}
                 >
                     <Draggable>
-                    <PopulatedImage left={150} top={10 + i*20} 
-                    id="ele"
-                    onDrag={(e) => bind.onDrag(e)}>
+                    <PopulatedImage left={150} top={10 + i*20}
+                    id="ele">
                         <span id="liness"/>
                     </PopulatedImage>
                     </Draggable>
@@ -79,23 +86,23 @@ const BottomMobileComponent = () => {
         {num.map(i => {
             return(
             <DragDropContainer style={{position: 'absolute', left: '0'}}  key={i + 'container-row-3'}> 
-                <DropTarget 
-                targetKey="foo" 
+                <DropTarget
+                targetKey="foo"
                 onHit={(e) => {
                     e.target.innerHTML = `
                     <img src=${e.dragData} id="outer" alt="props"/>
-                    <span 
+                    <span
                     class="className"
                     onclick="can()"
+                    id=${'className2' + i}
                     ontouchstart="can()"
                     />
                     `;
                 }}
                 >
                     <Draggable>
-                    <PopulatedImage left={200} top={10 + i*20} 
-                    id="ele"
-                    onDrag={(e) => bind.onDrag(e)}>
+                    <PopulatedImage left={200} top={10 + i*20}
+                    id="ele">
                         <span id="liness"/>
                     </PopulatedImage>
                     </Draggable>
@@ -112,6 +119,7 @@ const BottomMobileComponent = () => {
                     <img src=${e.dragData} id="outer" alt="props"/>
                     <span 
                     class="className"
+                    id=${'className3' + i}
                     onclick="can()"
                     ontouchstart="can()"
                     />
@@ -120,8 +128,7 @@ const BottomMobileComponent = () => {
                 >
                     <Draggable>
                     <PopulatedImage left={250} top={10 + i*20} 
-                    id="ele"
-                    onDrag={(e) => bind.onDrag(e)}>
+                    id="ele">
                         <span id="liness"/>
                     </PopulatedImage>
                     </Draggable>
@@ -139,6 +146,7 @@ const BottomMobileComponent = () => {
                     <img src=${e.dragData} id="outer" alt="props"/>
                     <span 
                     class="className"
+                    id=${'className4' + i}
                     onclick="can()"
                     ontouchstart="can()"
                     />
@@ -147,8 +155,7 @@ const BottomMobileComponent = () => {
                 >
                     <Draggable>
                     <PopulatedImage left={300} top={10 + i*20} 
-                    id="ele"
-                    onDrag={(e) => bind.onDrag(e)}>
+                    id="ele">
                         <span id="liness"/>
                     </PopulatedImage>
                     </Draggable>
@@ -166,6 +173,7 @@ const BottomMobileComponent = () => {
                     <img src=${e.dragData} id="outer" alt="props"/>
                     <span 
                     class="className"
+                    id=${'className5' + i}
                     ontouchstart="script.js"
                     ontouchstart="can()"
                     />
@@ -174,8 +182,7 @@ const BottomMobileComponent = () => {
                 >
                     <Draggable>
                     <PopulatedImage left={400} top={10 + i*20} 
-                    id="ele"
-                    onDrag={(e) => bind.onDrag(e)}>
+                    id="ele">
                         <span id="liness"/>
                     </PopulatedImage>
                     </Draggable>
@@ -183,7 +190,7 @@ const BottomMobileComponent = () => {
             </DragDropContainer>)
         })}
 
-{num.map(i => {
+        {num.map(i => {
             return(
             <DragDropContainer style={{position: 'absolute', left: '0'}}  key={i + 'container-row-6'}> 
                 <DropTarget 
@@ -195,14 +202,14 @@ const BottomMobileComponent = () => {
                     class="className"
                     ontouchstart="script.js"
                     ontouchstart="can()"
+                    id=${'className6' + i}
                     />
                     `;
                 }}
                 >
                     <Draggable>
                     <PopulatedImage left={480} top={10 + i*20} 
-                    id="ele"
-                    onDrag={(e) => bind.onDrag(e)}>
+                    id="ele">
                         <span id="liness"/>
                     </PopulatedImage>
                     </Draggable>

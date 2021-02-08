@@ -38,7 +38,7 @@ const PlayComponent = () => {
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
     const [elements, setElements] = useState([]);
     const [rotate, setRotate] = useState(false);
-    // const [glow,setGlow] = useState(false);
+
     const data = {
         normalImg: [...normalImg, value],
     }
@@ -100,6 +100,14 @@ const PlayComponent = () => {
 
     const [count, setCount] = useState(0);
     const [press, setPress] = useState(false);
+    React.useEffect(() => {
+        elements.forEach((i,index) => {
+          if(press){
+            i.animated = true;
+          }
+        })
+        setElements(elements);
+      }, [press, elements, setElements])
 
     let incr = 0;
     return (
@@ -173,8 +181,6 @@ const PlayComponent = () => {
                 <DescSpan>
                     Description:
                 </DescSpan> 
-           
-           
 
             {dimensions.width > 892? count === 0 ? 
             <PosButton color={'grey'} back={'white'}

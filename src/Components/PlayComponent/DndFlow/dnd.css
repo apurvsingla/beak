@@ -56,6 +56,10 @@
   }
 }
 
+.MuiSwitch-root{
+  transform: rotate(90deg);
+}
+
 .react-flow__node {
   border: none !important;
   box-shadow: none !important;

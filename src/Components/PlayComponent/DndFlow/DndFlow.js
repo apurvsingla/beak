@@ -8,6 +8,7 @@ import { v4 } from 'uuid';
 import useSound from 'use-sound';
 import boopSfx from '../../sound/beep.mp3';
 import Slider from '@material-ui/core/Slider';
+import Switch from '@material-ui/core/Switch';
 import './dnd.css';
 
 let id = 0;
@@ -45,81 +46,67 @@ const marks = [
       ];
 
 function valueLabelFormat(value) {
-return marks.findIndex((mark) => mark.value === value) ;
+  return marks.findIndex((mark) => mark.value === value) ;
 }
 const getId = () => `dndnode_${id++}`;
 const DnDFlow = ({image,setImage,ids,setId,
   reactFlowInstance,setReactFlowInstance,
   elements,setElements,rotate, press, setPress,
 }) => {
-  const [dimensions, setDimensions] = React.useState({ 
-    height: window.innerHeight,
-    width: window.innerWidth
-  })
-  React.useEffect(() => {
-  function handleResize() {
-          setDimensions({
-          height: window.innerHeight,
-          width: window.innerWidth
-          })
-          return _ => {
-          window.removeEventListener('resize', handleResize)
-          
-          }
+
+  const [delId, setDelId] = React.useState(0);
+
+  const handleClick = async() => {
+    // elements.forEach(i => i.animated = true);
+    console.log(elements);
+    // setElements(elements);
   }
-  window.addEventListener('resize', handleResize);
-  }) 
 
   const [play] = useSound(boopSfx);
   const onConnect = (params) => {
-    console.log(elements);
-    params.animated = true; 
+    if(press){
+      params.animated = true;
+    }
+    // params.id = id;
     setElements((els) => addEdge(params, els));
   };
 
   const onUpdateEdge = (params) => {
     params.animated = false;
-    setElements((els) => updateEdge(params,els))
+    setElements((els) => updateEdge(params,els));
   }
 
-  const onElementsRemove = (elementsToRemove) => setElements((els) => {console.log(els); removeElements(elementsToRemove, els)});
+  const onElementsRemove = (elementsToRemove) => setElements((els) => {removeElements(elementsToRemove, els)});
   const onLoad = (_reactFlowInstance) => setReactFlowInstance(_reactFlowInstance);
   const onDragOver = (event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
   };
-  // const onTouchEnd = (event) => {
-  //   event.preventDefault();
-  //   event.dataTransfer.dropEffect = 'move';
-  // } 
+
   const onClickEvent=(e) => {
+    let newDelId = Number(e.target.id);
     const newArray = [...image];
-    newArray.forEach((i,index) => {
-      const arr = newArray[index]
-      if(arr.id === ids-1){
-          newArray.splice(ids-1,1)
-      }
-    });
+    const newImage = [...elements];
+    newArray.splice(newDelId,1);
+    newImage.splice(ids,1);
     setImage(newArray);
-    elements.splice(id);
-    setElements(elements);
-  } 
-  
+    setElements(newImage);
+  }
 
   const onDrop = (event) => {
     event.preventDefault();
     const type = event.dataTransfer.getData('application/reactflow');
-    const position = reactFlowInstance.project({ x: event.clientX-300, y: event.clientY -40});
+    const position = reactFlowInstance.project({ x: event.clientX-320, y: event.clientY -40});
     const text = ()=>{
       const data = (JSON.parse(sessionStorage.getItem("normal-img")));
       const d = (data[data.length-1].src);
       const alt = data[data.length-1].alt;
       return (
         <>
-        <div 
+        <div
         className="Image-render"
         style={{
-          backgroundImage: `url(${d})`, 
+          backgroundImage: `url(${d})`,
           transform: `${rotate? 'rotate(90deg)': 'rotate(0deg)'}`
         }}
         id="image-render"
@@ -132,7 +119,7 @@ const DnDFlow = ({image,setImage,ids,setId,
           /> : null }
           
         </div>
-        {alt === "Power Led" ? !rotate ? 
+        {alt === "Power Led" ? !rotate ?
         <>
           <Handle type="source" position="right" id={getId()} 
           style={{ top: 50, background: '#555', left: 115, }} 
@@ -141,6 +128,7 @@ const DnDFlow = ({image,setImage,ids,setId,
           style={{ top: 70, background: '#555', left: 115, }} 
           key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
+          id={JSON.stringify(delId)} className={delId}
           style={{position: 'relative', top: '-117px', left: '97px',
           background: 'white', borderRadius: '100px'}} key={v4()}/>
         </> :  
@@ -150,8 +138,9 @@ const DnDFlow = ({image,setImage,ids,setId,
           <Handle type="target" position="right" id={getId()} 
           style={{ top: 95, background: '#555', left: 45, }} key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
+          id={JSON.stringify(delId)}
           style={{position: 'relative', top: '-105px', left: '107px',
-          background: 'white', borderRadius: '100px'}} key={v4()}/>
+          background: 'white', borderRadius: '100px',}} key={v4()}/>
         </> : null}
        
         {alt === "Splitter" ? 
@@ -160,7 +149,7 @@ const DnDFlow = ({image,setImage,ids,setId,
           style={{ top: 3, background: '#555', left: 67, }} key={v4()}/>
           <Handle type="source" position="right" id={getId()} 
           style={{ top: 120, background: '#555', left: 67 }} key={v4()}/>
-          <Handle type="source" position="right" id={getId()} 
+          <Handle type="target" position="right" id={getId()} 
           style={{ top: 62, background: '#555', left: 15, }} key={v4()}/>
           <Handle type="source" position="right" id={getId()} 
           style={{ top: 62, background: '#555', left: 120 }} key={v4()}/>
@@ -173,7 +162,7 @@ const DnDFlow = ({image,setImage,ids,setId,
         alt === "Diode" ||alt === "Capacitor" ||alt === "Tact" ? 
         rotate ?
         <>
-          <Handle type="source" position="left" id={getId()} 
+          <Handle type="target" position="left" id={getId()} 
           style={{ top: 0, background: '#555', left: 40, }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
           style={{ top: 102, background: '#555', left: 40 }} key={v4()}/>
@@ -182,7 +171,7 @@ const DnDFlow = ({image,setImage,ids,setId,
           background: 'white', borderRadius: '100px'}} key={v4()}/>
         </>: 
         <>
-          <Handle type="source" position="left" id={getId()} 
+          <Handle type="target" position="left" id={getId()} 
           style={{ top: 62, background: '#555', left: -13, }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
           style={{ top: 62, background: '#555', left: 145 }} key={v4()}/>
@@ -192,7 +181,13 @@ const DnDFlow = ({image,setImage,ids,setId,
         </>
         :null} 
 
-        {alt === "LDR" ? 
+        {alt === 'DualSwitch' ?
+        <span style={{position: 'absolute', top: '48px', left: '42px'}}>
+          <Switch
+          />
+        </span>: null}
+
+        {alt === "LDR" || alt === 'POTENTIOMETER'? 
         <span style={{posiiton: 'relative', top: '-100px'}}>
         <Slider 
         key={v4()}
@@ -237,12 +232,15 @@ const DnDFlow = ({image,setImage,ids,setId,
         }}
         /> </span>: null}
 
-        {alt === 'Tact' ? 
+        {alt === 'Tact' ?
         <FiberManualRecordIcon
-          style={{position: 'relative', top: '-95px', 
+          style={{position: 'relative', top: '-95px',
           left: '62px', borderRadius: '100px'}}
           onMouseDown={() => {
-          setPress(!press);
+          setPress(true);
+          // elements.map(i => i.animated = true);
+          // setElements(elements);
+          handleClick();
           play();
           let spanId = document.querySelectorAll('#spanId');
            return Object.values(spanId).map(i => {
@@ -250,7 +248,7 @@ const DnDFlow = ({image,setImage,ids,setId,
             });
         }}
         onMouseUp={() => {
-        setPress(!press);
+        setPress(false);
         let spanId = document.querySelectorAll('#spanId');
          return Object.values(spanId).map(i => {
             return i.style.backgroundColor= "transparent";
@@ -284,7 +282,7 @@ const DnDFlow = ({image,setImage,ids,setId,
         <>
           <Handle type="target" position="left" id={getId()} 
           style={{ top: 65, background: '#555', left: -13, }} key={v4()}/>
-          <Handle type="source" position="left" id={getId()} 
+          <Handle type="target" position="left" id={getId()} 
           style={{ top: 55, background: '#555', left: 145 }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
           style={{ top: 80, background: '#555', left: 145 }} key={v4()}/>
@@ -294,40 +292,43 @@ const DnDFlow = ({image,setImage,ids,setId,
           stroke="grey" key={v4()}/>
         </>
         :<>
-          <Handle type="target" position="left" id={getId()} 
+          <Handle type="target" position="left" id={getId()}
           style={{ top: -15, background: '#555', left: 62, }} key={v4()}/>
-          <Handle type="source" position="left" id={getId()} 
+          <Handle type="target" position="left" id={getId()}
           style={{ top: 135, background: '#555', left: 45 }} key={v4()}/>
-          <Handle type="source" position="left" id={getId()} 
+          <Handle type="source" position="left" id={getId()}
           style={{ top: 135, background: '#555', left: 72 }} key={v4()}/>
-          <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
+          <CancelOutlinedIcon onClick={(e) => onClickEvent(e)}
           style={{position: 'relative', top: '-145px', left: '88px',
           background: 'white', borderRadius: '100px'}} key={v4()}/>
         </>:null}    
 
         {alt === "DualSwitch"  ? !rotate ?
         <>
-          <Handle type="source" position="left" id={getId()} 
+          <Handle type="target" position="left" id={getId()}
+          className="upper" 
           style={{ top: 67, background: '#555', left: -13, }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
           style={{ top: 50, background: '#555', left: 145 }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
+          className="lower"
           style={{ top: 82, background: '#555', left: 145 }} key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
           style={{position: 'relative', top: '-102px', left: '134px',
           background: 'white', borderRadius: '100px'}} key={v4()}/>
         </>
         :<>
-          <Handle type="source" position="left" id={getId()} 
+          <Handle type="target" position="left" id={getId()} className="upper"
           style={{ top: -15, background: '#555', left: 62, }} key={v4()}/>
           <Handle type="source" position="left" id={getId()} 
           style={{ top: 135, background: '#555', left: 45 }} key={v4()}/>
-          <Handle type="source" position="left" id={getId()} 
+          <Handle type="source" position="left" id={getId()} className="lower"
           style={{ top: 135, background: '#555', left: 75 }} key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
           style={{position: 'relative', top: '-145px', left: '92px',
           background: 'white', borderRadius: '100px'}} key={v4()}/>
         </>:null} 
+        
 
         {alt === 'POTENTIOMETER' ? !rotate ?
         <>
@@ -432,9 +433,11 @@ const DnDFlow = ({image,setImage,ids,setId,
       position,
       data: { label: text()},
       rotate: rotate,
-      alt: data[data.length-1].alt
+      alt: data[data.length-1].alt,
+      delId: delId
     };
     setElements((es) => es.concat(newNode));
+    setDelId(delId + 1);
   };
 
   return (
@@ -461,9 +464,9 @@ const DnDFlow = ({image,setImage,ids,setId,
           // onClick={onElementsRemove}
           key="edges"
           >
-            {dimensions.width > 892 ?<Controls 
+          <Controls 
             style={{position: 'fixed', bottom: '10px', left: '25vw',}}
-            /> : null}
+            /> 
             
           </ReactFlow>
         </div>

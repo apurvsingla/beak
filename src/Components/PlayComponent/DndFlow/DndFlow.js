@@ -112,7 +112,7 @@ const DnDFlow = ({image,setImage,ids,setId,
     if(alt === 'USB' && elements.length === 2){
       return;
     }
-    if(alt === 'Power Led' && elements.length === 2){
+    if(alt === 'Battery' && elements.length === 2){
       return;
     }
     params.yo = conId;
@@ -187,7 +187,7 @@ const DnDFlow = ({image,setImage,ids,setId,
           id={JSON.stringify(delId)} className={delId}
           style={{position: 'relative', top: '-117px', left: '137px',
           background: 'white', borderRadius: '100px'}} key={v4()}/>
-        </> :  
+        </> :
         <>
           <Handle type="source" position="right" id={getId()} 
           style={{ top: 135, background: '#555', left: 95, }} key={v4()}/>

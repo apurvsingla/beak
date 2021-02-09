@@ -39,10 +39,11 @@ const PlayComponent = () => {
     const [rotate, setRotate] = useState(false);
 
     const data = {
-        normalImg: [...normalImg, value],
+        normalImg: [...normalImg],
+        name: value
     }
 
-    const save = () => axios.post('https://beak-server.herokuapp.com/fan', data).then((res) => {
+    const save = () => axios.post('https://beak-server.herokuapp.com/lamp', data).then((res) => {
         console.log(res.data);
     }).catch((error) => {
         console.log(error);

@@ -19,7 +19,6 @@ import {useHistory} from 'react-router-dom';
 import BottomComponent from './BottomComponent/BottomComponent';
 import axios from "axios";
 import DnDFlow from './DndFlow/DndFlow';
-// import MobileDesign from './MobileDesign/MobileDesign';
 import BottomMobileComponent from './MobileDesign/BottomMobileComponent/BottomMobileComponent';
 
 const PlayComponent = () => {
@@ -83,7 +82,6 @@ const PlayComponent = () => {
             })
             return _ => {
             window.removeEventListener('resize', handleResize)
-            
             }
     }
     window.addEventListener('resize', handleResize);

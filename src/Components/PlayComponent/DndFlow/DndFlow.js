@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import ReactFlow, { ReactFlowProvider,addEdge, removeElements, Controls , Handle, updateEdge} from 'react-flow-renderer';
+import ReactFlow, { ReactFlowProvider,addEdge, removeElements, Controls , Handle, updateEdge, useStoreState } from 'react-flow-renderer';
 import ConnectionLine from './ConnectionLine';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
@@ -49,30 +49,80 @@ function valueLabelFormat(value) {
   return marks.findIndex((mark) => mark.value === value) ;
 }
 const getId = () => `dndnode_${id++}`;
+let checked = false;
+let press = false;
+
+
 const DnDFlow = ({image,setImage,ids,setId,
   reactFlowInstance,setReactFlowInstance,
-  elements,setElements,rotate, press, setPress,
+  elements,setElements,rotate,
 }) => {
 
   const [delId, setDelId] = React.useState(0);
+  const [conId, setConId] = React.useState(0);
+  // const [press, setPress] = React.useState(false);
 
-  const handleClick = async() => {
-    // elements.forEach(i => i.animated = true);
-    console.log(elements);
-    // setElements(elements);
+  const func = () => {
+      setInterval(glowFunc2, 7000)
+      setTimeout(glowFunc, 3000);
+  }
+
+  const glowFunc = () => {
+    if(press){
+    console.log(press)
+      let spanId = document.querySelectorAll('#spanId');
+      return Object.values(spanId).map(i => {
+        return i.style.backgroundColor= "red";
+      });
+    }
+  }
+
+  const glowFunc2 = () => {
+    let spanId = document.querySelectorAll('#spanId');
+    return Object.values(spanId).map(i => {
+      return i.style.backgroundColor= "transparent";
+    });
+  }
+  
+  const handleChange = (event) => {
+    if(event.target.checked)  checked = true;
+    if(!event.target.checked)  checked = false;
+    let spanId = document.querySelectorAll('#spanId');
+    if(checked){
+      return Object.values(spanId).map(i => {
+        return i.style.backgroundColor= "red";
+      });
+    }else{
+      return Object.values(spanId).map(i => {
+        return i.style.backgroundColor= "transparent";
+      });
+    }
   }
 
   const [play] = useSound(boopSfx);
   const onConnect = (params) => {
+    const data = (JSON.parse(sessionStorage.getItem("normal-img")));
+    const alt = data[data.length-1].alt;
     if(press){
       params.animated = true;
     }
-    // params.id = id;
+    if(elements.length === 2){
+      params.animated = true;
+    }
+    if(alt === 'USB' && elements.length === 2){
+      return;
+    }
+    if(alt === 'Power Led' && elements.length === 2){
+      return;
+    }
+    params.yo = conId;
+    if(checked) params.animated = true;
+    setConId(conId+1);
     setElements((els) => addEdge(params, els));
   };
 
   const onUpdateEdge = (params) => {
-    params.animated = false;
+    // params.animated = false;
     setElements((els) => updateEdge(params,els));
   }
 
@@ -81,6 +131,11 @@ const DnDFlow = ({image,setImage,ids,setId,
   const onDragOver = (event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
+  };
+
+  const NodesDebugger = () => {
+    const nodes = useStoreState((state) => state.nodes);
+    return null;
   };
 
   const onClickEvent=(e) => {
@@ -111,7 +166,8 @@ const DnDFlow = ({image,setImage,ids,setId,
         }}
         id="image-render"
         key={v4()}>
-          {alt === 'Beeper' ? <span className="span"
+          {alt === 'Beeper' ||alt === 'LED'?
+          <span className="span"
           id="spanId"
           key={v4()}
           style={{backgroundColor: 'none'}}
@@ -119,29 +175,30 @@ const DnDFlow = ({image,setImage,ids,setId,
           /> : null }
           
         </div>
-        {alt === "Power Led" ? !rotate ?
+        {alt === "Battery" ? !rotate ?
         <>
           <Handle type="source" position="right" id={getId()} 
-          style={{ top: 50, background: '#555', left: 115, }} 
+          style={{ top: 45, background: '#555', left: 145, }} 
           key={v4()}/>
           <Handle type="target" position="right" id={getId()} 
-          style={{ top: 70, background: '#555', left: 115, }} 
+          style={{ top: 70, background: '#555', left: 145, }} 
           key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
           id={JSON.stringify(delId)} className={delId}
-          style={{position: 'relative', top: '-117px', left: '97px',
+          style={{position: 'relative', top: '-117px', left: '137px',
           background: 'white', borderRadius: '100px'}} key={v4()}/>
         </> :  
         <>
           <Handle type="source" position="right" id={getId()} 
-          style={{ top: 95, background: '#555', left: 95, }} key={v4()}/>
+          style={{ top: 135, background: '#555', left: 95, }} key={v4()}/>
           <Handle type="target" position="right" id={getId()} 
-          style={{ top: 95, background: '#555', left: 45, }} key={v4()}/>
+          style={{ top: 135, background: '#555', left: 45, }} key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
           id={JSON.stringify(delId)}
-          style={{position: 'relative', top: '-105px', left: '107px',
+          style={{position: 'relative', top: '-125px', left: '90px',
           background: 'white', borderRadius: '100px',}} key={v4()}/>
         </> : null}
+        
        
         {alt === "Splitter" ? 
         <> 
@@ -158,8 +215,7 @@ const DnDFlow = ({image,setImage,ids,setId,
           background: 'white', borderRadius: '100px'}} key={v4()}/>
         </>: null}
        
-        {alt === "LED" || alt === "Resistor" ||alt === "LDR" ||
-        alt === "Diode" ||alt === "Capacitor" ||alt === "Tact" ? 
+        {alt === "LED" || alt === "Resistor" ||alt === "LDR" ||alt === "Capacitor" ||alt === "Tact" ? 
         rotate ?
         <>
           <Handle type="target" position="left" id={getId()} 
@@ -181,9 +237,32 @@ const DnDFlow = ({image,setImage,ids,setId,
         </>
         :null} 
 
+        {alt === "Diode"? 
+        rotate ?
+        <>
+          <Handle position="left" id={getId()} 
+          style={{ top: 0, background: '#555', left: 40, }} key={v4()}/>
+          <Handle position="left" id={getId()} 
+          style={{ top: 102, background: '#555', left: 40 }} key={v4()}/>
+          <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
+          style={{position: 'relative', top: '-147px', left: '82px',
+          background: 'white', borderRadius: '100px'}} key={v4()}/>
+        </>: 
+        <>
+          <Handle position="left" id={getId()} 
+          style={{ top: 62, background: '#555', left: -13, }} key={v4()}/>
+          <Handle position="left" id={getId()} 
+          style={{ top: 62, background: '#555', left: 145 }} key={v4()}/>
+          <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
+          style={{position: 'relative', top: '-91px', left: '138px',
+          background: 'white', borderRadius: '100px'}} key={v4()}/>
+        </>
+        :null} 
+
         {alt === 'DualSwitch' ?
         <span style={{position: 'absolute', top: '48px', left: '42px'}}>
           <Switch
+          onChange={handleChange}
           />
         </span>: null}
 
@@ -200,7 +279,8 @@ const DnDFlow = ({image,setImage,ids,setId,
         valueLabelDisplay="auto"
         onChange={(e) => {
           const num = Number(e.target.innerText);
-          setPress(!press);
+          // setPress(!press);
+          press = true;
           let spanId = document.querySelectorAll('#spanId');
            return Object.values(spanId).map(i => {
               if(num === 1){
@@ -232,15 +312,13 @@ const DnDFlow = ({image,setImage,ids,setId,
         }}
         /> </span>: null}
 
+
         {alt === 'Tact' ?
         <FiberManualRecordIcon
           style={{position: 'relative', top: '-95px',
           left: '62px', borderRadius: '100px'}}
           onMouseDown={() => {
-          setPress(true);
-          // elements.map(i => i.animated = true);
-          // setElements(elements);
-          handleClick();
+          press = true;
           play();
           let spanId = document.querySelectorAll('#spanId');
            return Object.values(spanId).map(i => {
@@ -248,14 +326,16 @@ const DnDFlow = ({image,setImage,ids,setId,
             });
         }}
         onMouseUp={() => {
-        setPress(false);
         let spanId = document.querySelectorAll('#spanId');
          return Object.values(spanId).map(i => {
             return i.style.backgroundColor= "transparent";
-        });
-    }}
-      key={v4()}/>
+          });
+        }}
+        key={v4()}/>
         :null}
+
+        {alt === 'Capacitor' ? func() : null}
+
 
         {alt === "Beeper" ? rotate ?
         <>
@@ -308,9 +388,9 @@ const DnDFlow = ({image,setImage,ids,setId,
           <Handle type="target" position="left" id={getId()}
           className="upper" 
           style={{ top: 67, background: '#555', left: -13, }} key={v4()}/>
-          <Handle type="source" position="left" id={getId()} 
+          <Handle type="source" position="left" id={'dual-upper'} 
           style={{ top: 50, background: '#555', left: 145 }} key={v4()}/>
-          <Handle type="source" position="left" id={getId()} 
+          <Handle type="source" position="left" id={'dual-lower'} 
           className="lower"
           style={{ top: 82, background: '#555', left: 145 }} key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
@@ -320,9 +400,9 @@ const DnDFlow = ({image,setImage,ids,setId,
         :<>
           <Handle type="target" position="left" id={getId()} className="upper"
           style={{ top: -15, background: '#555', left: 62, }} key={v4()}/>
-          <Handle type="source" position="left" id={getId()} 
+          <Handle type="source" position="left" id={'dual-upper'} 
           style={{ top: 135, background: '#555', left: 45 }} key={v4()}/>
-          <Handle type="source" position="left" id={getId()} className="lower"
+          <Handle type="source" position="left" id={'dual-lower'} className="lower"
           style={{ top: 135, background: '#555', left: 75 }} key={v4()}/>
           <CancelOutlinedIcon onClick={(e) => onClickEvent(e)} 
           style={{position: 'relative', top: '-145px', left: '92px',
@@ -467,7 +547,7 @@ const DnDFlow = ({image,setImage,ids,setId,
           <Controls 
             style={{position: 'fixed', bottom: '10px', left: '25vw',}}
             /> 
-            
+            <NodesDebugger />
           </ReactFlow>
         </div>
       </ReactFlowProvider>

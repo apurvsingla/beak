@@ -8,7 +8,7 @@ resistorSource,
 tactSource,
 beeperSource,
 // ledSource,
-powerSource,
+// powerSource,
 timerSource,
 dualSwitch,
 ldrSource,
@@ -17,7 +17,8 @@ capacitorSource,
 potSource,
 usbSource,
 transistorSource,
-ledGlowSource
+ledGlowSource,
+batterySource
 } from '../../Source/Source';
 // import {Draggable, DropZone} from 'react-drag-or-touch-drop'
 import './Bottom.style.scss'
@@ -44,7 +45,6 @@ const BottomComponent = ({
     window.addEventListener('resize', handleResize);
     })
     const onDragStart = (event, nodeType) => {
-        console.log(event.dataTransfer)
         event.dataTransfer.setData('application/reactflow', nodeType);
         event.dataTransfer.effectAllowed = 'move';
       }; 
@@ -76,13 +76,13 @@ const BottomComponent = ({
                         <DivImg className="dndnode input" 
                         onDragStart={(event) => {
                             onDragStart(event, 'input');
-                            onImage1Concat(powerSource, 'Power Led')
+                            onImage1Concat(batterySource, 'Battery')
                         }} 
                         onTouchStart={(event) => {
                             onTouchMove(event, 'input');
-                            onImage1Concat(powerSource, 'Power Led')
+                            onImage1Concat(batterySource, 'Battery')
                         }} 
-                        Image={powerSource}
+                        Image={batterySource}
                         draggable>
                         </DivImg>
                         <DivImg className="dndnode input" 
@@ -222,13 +222,13 @@ const BottomComponent = ({
                     <DivImg className="dndnode input" 
                     onTouchEnd={(event) => {
                         onTouchMove(event,'input');
-                        onImage1Concat(powerSource, 'Power Led')
+                        onImage1Concat(batterySource, 'Battery')
                     }}
                     onTouchMove={(event) => {
                         onTouchMove(event,'input');
-                        onImage1Concat(powerSource, 'Power Led')
+                        onImage1Concat(batterySource, 'Battery')
                     }}
-                    Image={powerSource}
+                    Image={batterySource}
                     draggable>
                     </DivImg>
                     <DivImg className="dndnode input" 

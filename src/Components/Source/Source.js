@@ -16,6 +16,7 @@ export const conditionSource = process.env.PUBLIC_URL + '/images/images/splitter
 export const leftImageSource = process.env.PUBLIC_URL + '/images/images/save.png';
 export const transistorSource = process.env.PUBLIC_URL + '/images/images/transistor.png';
 export const usbSource = process.env.PUBLIC_URL + '/images/images/USB.png';
+export const batterySource = process.env.PUBLIC_URL + '/images/images/battery.png';
 
 export const fanSource = process.env.PUBLIC_URL + '/images/images/fan.png';
 export const tableSource = process.env.PUBLIC_URL + '/images/images/table.png';
